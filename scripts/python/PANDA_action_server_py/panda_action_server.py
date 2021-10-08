@@ -118,11 +118,11 @@ class GrabObject(object):
         self._feedback.sequence.append(0)
         self._feedback.sequence.append(1)
         
-        rospy.loginfo('%s: Executing, creating GrabObject sequence with object %s with seeds %i, %i' % (self._action_name, goal.outputMessage, self._feedback.sequence[0], self._feedback.sequence[1]))
+        rospy.loginfo('%s: Executing, creating GrabObject sequence with object %s with seeds %i, %i' % (self._action_name, goal.objectPosition, self._feedback.sequence[0], self._feedback.sequence[1]))
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_facialexpression(goal.outputMessage)
+        success = panda_facialexpression(goal.objectPosition)
           
         if success:
             self._result.isOK = success
@@ -149,11 +149,11 @@ class PutObject(object):
         self._feedback.sequence.append(0)
         self._feedback.sequence.append(1)
         
-        rospy.loginfo('%s: Executing, creating PutObject with object %s with seeds %i, %i' % (self._action_name, goal.outputMessage, self._feedback.sequence[0], self._feedback.sequence[1]))
+        rospy.loginfo('%s: Executing, creating PutObject with object %s with seeds %i, %i' % (self._action_name, goal.objectPosition, self._feedback.sequence[0], self._feedback.sequence[1]))
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_speak(goal.outputMessage)
+        success = panda_speak(goal.objectPosition)
           
         if success:
             self._result.isOK = success

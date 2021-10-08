@@ -1,5 +1,5 @@
 #goal definition
-char[] outputMessage
+char[] objectPosition
 ---
 #result definition
 bool isOK

@@ -33,7 +33,7 @@ def panda_request_GrabObject():
 
     client = actionlib.SimpleActionClient('GrabObject', rxt_skills_panda.msg.GrabObjectAction) # Creates SimpleActionClient with GrabObject action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.GrabObjectGoal(outputMessage=b'happy') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.GrabObjectGoal(objectPosition=b'Lagerfach_4') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -46,7 +46,7 @@ def panda_request_PutObject():
 
     client = actionlib.SimpleActionClient('PutObject', rxt_skills_panda.msg.PutObjectAction) # Creates SimpleActionClient with PutObject action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.PutObjectGoal(outputMessage=b'Hallo ich bin ein sozialer Roboter') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.PutObjectGoal(objectPosition=b'ARTI_ParkingStation') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     

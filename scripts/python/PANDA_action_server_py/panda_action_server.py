@@ -9,43 +9,43 @@ import rxt_skills_panda.msg
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: speak
+# helper function: grab
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_speak(sentence):
+def panda_grab(object):
+
+    print ('TODO: NOT YET IMPLEMENTED!')
+    return True
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+# helper function: put
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+def panda_put(object):
     
     print ('TODO: NOT YET IMPLEMENTED!')
     return True
-    
+   
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: listen
+# helper function: listen for input
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_listen():
+def panda_listen_for_Input():
     
     print ('TODO: NOT YET IMPLEMENTED!')
     ret=b'TODO'
     return ret
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: move head
+# helper function: move to location
 #------------------------------------------------------------------------------------------------------------------------------------------------------------ 
-def panda_movehead(position):
+def panda_move_to_location(position):
  
     print ('TODO: NOT YET IMPLEMENTED!')
     return True
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: speak
+# helper function: wait external event
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_facedetection(inputFace):
+def panda_waitExternal(input):
     
-    print ('TODO: NOT YET IMPLEMENTED!')
-    return True
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: speak
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_facialexpression(inputFace):
-
     print ('TODO: NOT YET IMPLEMENTED!')
     return True
     
@@ -91,7 +91,7 @@ class MoveToLocation(object):
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_movehead(goal.location)
+        success = panda_move_to_location(goal.location)
           
         if success:
             self._result.isOK = success
@@ -122,7 +122,7 @@ class GrabObject(object):
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_facialexpression(goal.objectPosition)
+        success = panda_grab(goal.objectPosition)
           
         if success:
             self._result.isOK = success
@@ -153,7 +153,7 @@ class PutObject(object):
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_speak(goal.objectPosition)
+        success = panda_put(goal.objectPosition)
           
         if success:
             self._result.isOK = success
@@ -185,7 +185,7 @@ class WaitForUserInput(object):
         # start executing the action
         #success = fibonacci_example(self, success)
         success = True
-        returnMsg = panda_listen()
+        returnMsg = panda_listen_for_Input()
           
         if success:
             self._result.returnMessage = returnMsg
@@ -216,7 +216,7 @@ class WaitForExternalEvent(object):
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_facedetection(goal.inputText)
+        success = panda_waitExternal(goal.inputText)
           
         if success:
             self._result.isOK = success

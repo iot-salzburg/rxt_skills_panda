@@ -1,27 +1,49 @@
 #!/usr/bin/env python
-import os, sys, time
+import os, sys, time, json
 import rospy
 import actionlib
 import rxt_skills_panda.msg
 
-
-# TODO import required PANDA libs here
-
+# for publisher subscriber
+from std_msgs.msg import String
+from panda_controller import *
+    
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: grab
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_grab(object):
+# helper function: move to location
+#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+def listener_callback(data):
+    rospy.loginfo(rospy.get_caller_id() + "On Topic opcua_response: I heard message %s", data.data)
 
-    print ('TODO: NOT YET IMPLEMENTED!')
+def panda_move_to_location(position):
+
+    try:
+        print ('Trying to publish to topic: opcua_order')
+        pub = rospy.Publisher('ros_opcua_order', String, queue_size=10) 
+        rospy.loginfo("data: 'S 1'")
+        pub.publish("data: 'S 1'")
+
+        print ('Trying to listen from topic: opcua_response')
+        rospy.Subscriber('ros_opcua_response', String, listener_callback)
+    except rospy.ROSInterruptException:
+        pass
+
     return True
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: put
+# helper function: grab (close gripper)
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+def panda_grab(object):
+    
+    print ('TODO: Close Gripper')
+    return True
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+# helper function: put (open gripper)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_put(object):
     
-    print ('TODO: NOT YET IMPLEMENTED!')
+    print ('TODO: Open Gripper')
     return True
    
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -29,24 +51,16 @@ def panda_put(object):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_listen_for_Input():
     
-    print ('TODO: NOT YET IMPLEMENTED!')
+    print ('TODO: Wait for User Touch')
     ret=b'TODO'
     return ret
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: move to location
-#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
-def panda_move_to_location(position):
- 
-    print ('TODO: NOT YET IMPLEMENTED!')
-    return True
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: wait external event
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_waitExternal(input):
     
-    print ('TODO: NOT YET IMPLEMENTED!')
+    print ('TODO: Wait for Event')
     return True
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,15 +68,26 @@ def panda_waitExternal(input):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_write_setting(setting, value):
     
-    print ('TODO: NOT YET IMPLEMENTED!')
+    print ('TODO: Write Setting')
     return True
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: read a setting
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_read_setting(setting):
+
+
+    topics = rospy.get_published_topics()
+    rospy.loginfo("Topics: %s", json.dumps(topics, indent=4))
+
+    # Create subscribers for appropriate topics, custom message and name of callback function. We do not yet get all topics and subscribe to them.
+    rospy.Subscriber('/franka_state_controller/franka_states', FrankaState, publishFrankaState)
+    rospy.Subscriber('/joint_states', JointState, publishJointState)
+    #rospy.Subscriber('/panda_pc_heartbeat', NodeExampleData, publish_message)
+    #rospy.Subscriber('/exampleWithHeader', NodeExampleDataWithHeader, publish_message)
+    #rospy.Subscriber('/exampleWithHeader_throttle', NodeExampleDataWithHeader, publish_message)
     
-    print ('TODO: NOT YET IMPLEMENTED!')
+    print ('TODO: Read Setting')
     ret=b'TODO'
     return ret
 

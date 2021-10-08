@@ -14,17 +14,43 @@ import rxt_skills_panda.msg
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # client request implementations of PANDA action server functions
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_request_VoiceOutput():
+def panda_request_MoveToLocation():
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
-    client = actionlib.SimpleActionClient('VoiceOutput', rxt_skills_panda.msg.VoiceOutputAction) # Creates SimpleActionClient with VoiceOutputAction action type
+    client = actionlib.SimpleActionClient('MoveToLocation', rxt_skills_panda.msg.MoveToLocationAction) # Creates SimpleActionClient with MoveToLocationAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.VoiceOutputGoal(outputMessage=b'Hallo ich bin ein sozialer Roboter') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=b'right') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
-    return client.get_result() # Prints out the result (VoiceOutputResult) of executing the action
+    return client.get_result() # Prints out the result (MoveToLocationResult) of executing the action
+
+
+def panda_request_GrabObject():
+    
+    rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
+
+    client = actionlib.SimpleActionClient('GrabObject', rxt_skills_panda.msg.GrabObjectAction) # Creates SimpleActionClient with GrabObject action type
+    client.wait_for_server() # Waits until the action server has started up and started listening for goals
+    goal = rxt_skills_panda.msg.GrabObjectGoal(outputMessage=b'happy') # Creates a goal to send to the action server
+    client.send_goal(goal) # Sends the goal to the action server
+    client.wait_for_result() # Waits for the server to finish performing the action
+    
+    return client.get_result() # Prints out the result (GrabObjectResult) of executing the action
+
+
+def panda_request_PutObject():
+    
+    rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
+
+    client = actionlib.SimpleActionClient('PutObject', rxt_skills_panda.msg.PutObjectAction) # Creates SimpleActionClient with PutObject action type
+    client.wait_for_server() # Waits until the action server has started up and started listening for goals
+    goal = rxt_skills_panda.msg.PutObjectGoal(outputMessage=b'Hallo ich bin ein sozialer Roboter') # Creates a goal to send to the action server
+    client.send_goal(goal) # Sends the goal to the action server
+    client.wait_for_result() # Waits for the server to finish performing the action
+    
+    return client.get_result() # Prints out the result (PutObjectResult) of executing the action
 
 
 def panda_request_WaitForUserInput():
@@ -38,19 +64,6 @@ def panda_request_WaitForUserInput():
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (WaitForUserInputResult) of executing the action
-
-
-def panda_request_MoveToLocation():
-    
-    rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
-
-    client = actionlib.SimpleActionClient('MoveToLocation', rxt_skills_panda.msg.MoveToLocationAction) # Creates SimpleActionClient with MoveToLocationAction action type
-    client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=b'right') # Creates a goal to send to the action server
-    client.send_goal(goal) # Sends the goal to the action server
-    client.wait_for_result() # Waits for the server to finish performing the action
-    
-    return client.get_result() # Prints out the result (MoveToLocationResult) of executing the action
     
     
 def panda_request_WaitForExternalEvent():
@@ -64,19 +77,6 @@ def panda_request_WaitForExternalEvent():
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (WaitForExternalEventResult) of executing the action
-    
-    
-def panda_request_GraphicalUserInteraction():
-    
-    rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
-
-    client = actionlib.SimpleActionClient('GraphicalUserInteraction', rxt_skills_panda.msg.GraphicalUserInteractionAction) # Creates SimpleActionClient with GraphicalUserInteractionAction action type
-    client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.GraphicalUserInteractionGoal(outputMessage=b'happy') # Creates a goal to send to the action server
-    client.send_goal(goal) # Sends the goal to the action server
-    client.wait_for_result() # Waits for the server to finish performing the action
-    
-    return client.get_result() # Prints out the result (GraphicalUserInteractionResult) of executing the action
     
     
 def panda_request_GetData():
@@ -108,13 +108,37 @@ def panda_request_SetData():
 # main function
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
-    try:	
-        
-        # request VoiceOutput
-        result = panda_request_VoiceOutput()
+    try:
+
+	# request MoveToLocation
+        result = panda_request_MoveToLocation()
         if result:
             print ('----------------------------------')
-            print("Action was: VoiceOutput")
+            print("Action was: MoveToLocation")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')	
+        
+	# request GrabObject
+        result = panda_request_GrabObject()
+        if result:
+            print ('----------------------------------')
+            print("Action was: GrabObject")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')
+
+	# request MoveToLocation
+        result = panda_request_MoveToLocation()
+        if result:
+            print ('----------------------------------')
+            print("Action was: MoveToLocation")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')
+
+        # request PutObject
+        result = panda_request_PutObject()
+        if result:
+            print ('----------------------------------')
+            print("Action was: PutObject")
             print("Result was: " + str(result.isOK))
             print ('----------------------------------')
         
@@ -125,28 +149,12 @@ if __name__ == '__main__':
             print("Action was: WaitForUserInput")
             print("Result was:", ', '.join([str(n) for n in result.returnMessage.decode("utf-8")]))
             print ('----------------------------------')
-        
-        # request MoveToLocation
-        result = panda_request_MoveToLocation()
-        if result:
-            print ('----------------------------------')
-            print("Action was: MoveToLocation")
-            print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
-        
+                
         # request WaitForExternalEvent
         result = panda_request_WaitForExternalEvent()
         if result:
             print ('----------------------------------')
             print("Action was: WaitForExternalEvent")
-            print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
-        
-        # request GraphicalUserInteraction
-        result = panda_request_GraphicalUserInteraction()
-        if result:
-            print ('----------------------------------')
-            print("Action was: GraphicalUserInteraction")
             print("Result was: " + str(result.isOK))
             print ('----------------------------------')
         

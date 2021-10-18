@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Allow user to specify database location -->
+  <include file="$(find panda_moveit_config)/launch/panda_control_moveit_rviz.launch">
+    <arg name="robot_ip" default="192.168.13.1" />
+  </include>
+
+  <include file="$(find panda_moveit_config)/launch/ompl_planning_pipeline.launch.xml">
+  </include>
+
+  <node pkg="rxt_skills_panda" name="panda_control" type="panda_control">
+  <node pkg="rxt_skills_panda" type="ActionServer" name="ActionServer" launch-prefix="xterm -e" />
+  <node pkg="rxt_skills_panda" type="ActionClient" name="ActionClient" launch-prefix="xterm -e" /> 
+  </node>
+
+</launch>

@@ -2,7 +2,19 @@ cmake_minimum_required(VERSION 2.8.3)
 project(rxt_skills_panda)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
+find_package(catkin REQUIRED COMPONENTS message_generation rospy)
+find_package(Eigen3 REQUIRED)
+find_package(Protobuf REQUIRED)
+
+
+# Eigen 3.2 (Wily) only provides EIGEN3_INCLUDE_DIR, not EIGEN3_INCLUDE_DIRS
+if(NOT EIGEN3_INCLUDE_DIRS)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
+
+include_directories(${PROTOBUF_INCLUDE_DIR})
+
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -14,16 +26,32 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  moveit_core
+  moveit_visual_tools
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  pluginlib
+  geometric_shapes
+  control_msgs
+  franka_gripper
+  control_msgs
+  rosgraph_msgs
 )
 
+
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED system filesystem date_time thread)
+
+set(THIS_PACKAGE_INCLUDE_DIRS
+  doc/interactivity/include
+)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 catkin_python_setup()
+
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -103,12 +131,35 @@ generate_messages(
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES actionlib_tutorials_interfaces
-CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
-#  DEPENDS system_lib
-)
+
+catkin_package(CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs)
+
+
+set(SOURCES src/cpp/panda_control.cpp src/cpp/PandaRobot.h src/cpp/PandaRobot.cpp src/cpp/PandaPositions.h src/cpp/PandaPositions.cpp)
+add_executable(panda_control  ${SOURCES})
+target_link_libraries(panda_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARY})
+
+set(SOURCES src/cpp/panda_franka_joints.cpp)
+add_executable(panda_franka_joints  ${SOURCES})
+target_link_libraries(panda_franka_joints ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARY})
+
+
+install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  PATTERN "setup_assistant.launch" EXCLUDE)
+install(DIRECTORY config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+install(DIRECTORY franka_ros/franka_gripper/include/franka_gripper/
+	DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  	FILES_MATCHING PATTERN "*.h"
+  	PATTERN ".svn" EXCLUDE)
+
+
+install(PROGRAMS scripts/opc_ua_ros_server.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+
+install(TARGETS panda_control DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+
 
 ###########
 ## Build ##
@@ -116,40 +167,10 @@ CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-)
+include_directories(SYSTEM ${THIS_PACKAGE_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS})
+link_directories(${catkin_LIBRARY_DIRS})
 
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/actionlib_tutorials_interfaces.cpp
-# )
-
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Declare a C++ executable
-## With catkin_make all packages are built within a single CMake context
-## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/actionlib_tutorials_interfaces_node.cpp)
-
-## Rename C++ executable without prefix
-## The above recommended prefix causes long target names, the following renames the
-## target back to the shorter version for ease of user use
-## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
-
-## Add cmake target dependencies of the executable
-## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
 
 #############
 ## Install ##

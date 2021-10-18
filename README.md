@@ -81,8 +81,8 @@ DD:
 see documentation of rxt_skills_qbo project
 
 start with either launch script or with:
-rosrun rxt_skills_panda panda_action_server.py
-rosrun rxt_skills_panda panda_action_client.py
+- rosrun rxt_skills_panda panda_action_server.py
+- rosrun rxt_skills_panda panda_action_client.py
 
 
 

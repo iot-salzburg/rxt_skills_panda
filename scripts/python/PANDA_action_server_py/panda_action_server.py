@@ -23,8 +23,8 @@ def panda_move_to_location(position):
         rospy.loginfo("data: 'S 1'")
         pub.publish("data: 'S 1'")
 
-        print ('Trying to listen from topic: opcua_response')
-        rospy.Subscriber('ros_opcua_response', String, listener_callback)
+        #print ('Trying to listen from topic: opcua_response')
+        #rospy.Subscriber('ros_opcua_response', String, listener_callback)
     except rospy.ROSInterruptException:
         pass
 
@@ -81,8 +81,8 @@ def panda_read_setting(setting):
     rospy.loginfo("Topics: %s", json.dumps(topics, indent=4))
 
     # Create subscribers for appropriate topics, custom message and name of callback function. We do not yet get all topics and subscribe to them.
-    rospy.Subscriber('/franka_state_controller/franka_states', FrankaState, publishFrankaState)
-    rospy.Subscriber('/joint_states', JointState, publishJointState)
+    #rospy.Subscriber('/franka_state_controller/franka_states', FrankaState, publishFrankaState)
+    #rospy.Subscriber('/joint_states', JointState, publishJointState)
     #rospy.Subscriber('/panda_pc_heartbeat', NodeExampleData, publish_message)
     #rospy.Subscriber('/exampleWithHeader', NodeExampleDataWithHeader, publish_message)
     #rospy.Subscriber('/exampleWithHeader_throttle', NodeExampleDataWithHeader, publish_message)

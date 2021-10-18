@@ -20,7 +20,7 @@ def panda_request_MoveToLocation():
 
     client = actionlib.SimpleActionClient('MoveToLocation', rxt_skills_panda.msg.MoveToLocationAction) # Creates SimpleActionClient with MoveToLocationAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=b'right') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=b'PS 2') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     

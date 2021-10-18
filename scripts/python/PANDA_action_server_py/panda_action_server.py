@@ -7,6 +7,9 @@ import rxt_skills_panda.msg
 # for publisher subscriber
 from std_msgs.msg import String
 from panda_controller import *
+
+
+global subscriber_handler
     
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -15,16 +18,28 @@ from panda_controller import *
 def listener_callback(data):
     rospy.loginfo(rospy.get_caller_id() + "On Topic opcua_response: I heard message %s", data.data)
 
+#   if (data.data == String("Stopped")):
+#       subscriber_handler.unregister() # unregister and stop listening when panda stopped moving??
+#       subscriber_handler = None
+        # TODO: action is finished when this code is reached
+	
+
 def panda_move_to_location(position):
 
     try:
         print ('Trying to publish to topic: opcua_order')
-        pub = rospy.Publisher('ros_opcua_order', String, queue_size=10) 
-        rospy.loginfo("data: 'S 1'")
-        pub.publish("data: 'S 1'")
+        pub = rospy.Publisher('/ros_opcua_order', String, queue_size=10) 
+        message = "data: '" + position.decode("utf-8") + "'"
+        rospy.loginfo(message)
+        pub.publish(String(message))
 
-        #print ('Trying to listen from topic: opcua_response')
-        #rospy.Subscriber('ros_opcua_response', String, listener_callback)
+        print ('Trying to listen from topic: opcua_response')
+        subscriber_handler = rospy.Subscriber('/ros_opcua_response', String, listener_callback)
+
+        # this endless loop will keep the action going until we heard back from robot
+#       while subscriber_handler is not None:
+#           continue
+
     except rospy.ROSInterruptException:
         pass
 

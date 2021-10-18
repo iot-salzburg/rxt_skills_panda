@@ -2,8 +2,18 @@
 
 source ~/ros_workspace/devel/setup.bash
 
-# start all nodes and communication layer from CPP application
-roslaunch rxt_skills_panda Panda.launch
 
 # start the ROS action server in python using rospy
-rosrun rxt_skills_panda panda_action_server.py
+gnome-terminal -- rosrun rxt_skills_panda panda_action_server.py
+sleep 5
+
+# start roscore (serves as middle layer between all devices in ROBxTASK)
+gnome-terminal -- roscore
+sleep 5
+
+# start all nodes and communication layer from CPP application
+gnome-terminal -- roslaunch rxt_skills_panda Panda.launch
+
+
+
+

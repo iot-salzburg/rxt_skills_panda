@@ -363,66 +363,116 @@ std::vector<double> PandaPositions::getPosition(std::string position){
                 +0.130150		// Joint 7
         };
 
+
+
         // Positions for fat cup gripper just in front of the storage place
         // TOP position above cup storage
-        positions["cups storage"] =
+        positions["pack pose"] =
         {
-                -1.561792,		// Joint 1
-                -1.170083,		// Joint 2
-                -0.037845,		// Joint 3
-                -2.462313,		// Joint 4
-                -0.006930,		// Joint 5
-                +3.564846,		// Joint 6
-                -2.394994		// Joint 7
+                -0.000164,              // Joint 1
+                -0.559858,              // Joint 2
+                -0.000322,              // Joint 3
+                -2.600814,              // Joint 4
+                +0.000620,              // Joint 5
+                +1.854628,              // Joint 6
+                +0.785073               // Joint 7
+        };
+
+        // initial approach
+        positions["cups init"] =
+        {
+                -1.566413,              // Joint 1
+                -1.393163,              // Joint 2
+                -0.069446,              // Joint 3
+                -2.640760,              // Joint 4
+                +0.014970,              // Joint 5
+                +2.712432,              // Joint 6
+                +0.781679               // Joint 7
         };
 
         // near cup 1
         positions["near cup 1"] =
         {
-                -1.631899,		// Joint 1
-                -1.130588,		// Joint 2
-                -0.090083,		// Joint 3
-                -2.732624,		// Joint 4
-                -0.245313,		// Joint 5
-                +3.051188,		// Joint 6
-                -2.209830		// Joint 7
+                -1.579210,              // Joint 1
+                -0.830873,              // Joint 2
+                -0.080680,              // Joint 3
+                -2.355923,              // Joint 4
+                +0.000934,              // Joint 5
+                +2.715878,              // Joint 6
+                +0.766539               // Joint 7
         };
 
         // cup 1
         positions["cup 1"] =
         {
-                -1.582722,		// Joint 1
-                -0.531107,		// Joint 2
-                -0.087992,		// Joint 3
-                -2.489963,		// Joint 4
-                -0.004543,		// Joint 5
-                +3.465666,		// Joint 6
-                -2.392425		// Joint 7
+                -1.552766,              // Joint 1
+                -0.578903,              // Joint 2
+                -0.085411,              // Joint 3
+                -2.239540,              // Joint 4
+                -0.081153,              // Joint 5
+                +2.889223,              // Joint 6
+                +0.802551               // Joint 7
+        };
+
+        // Position above cart
+        positions["cart init"] =
+        {
+                +0.006132,              // Joint 1
+                -1.272309,              // Joint 2
+                -0.043135,              // Joint 3
+                -2.619795,              // Joint 4
+                +0.010689,              // Joint 5
+                +2.711010,              // Joint 6
+                +0.784954               // Joint 7
         };
 
         // Position above cart
         positions["near cart position"] =
         {
-                -0.832216,		// Joint 1
-                +1.138479,		// Joint 2
-                +1.494533,		// Joint 3
-                -2.266137,		// Joint 4
-                -2.788387,		// Joint 5
-                +1.749580,		// Joint 6
-                -0.460249		// Joint 7
+                -0.857337,		// Joint 1
+                -1.465075,		// Joint 2
+                +1.648837,		// Joint 3
+                -2.449865,		// Joint 4
+                +1.534230,		// Joint 5
+                +2.910359,		// Joint 6
+                +0.920835		// Joint 7
         };
 
-   
         // Position at cart
         positions["cart position"] =
         {
-                +0.236935,		// Joint 1
-                +1.417247,		// Joint 2
-                +0.173832,		// Joint 3
-                -0.805468,		// Joint 4
-                -2.632906,		// Joint 5
-                +2.431974,		// Joint 6
-                +0.251605		// Joint 7
+                -2.289861,		// Joint 1
+                -1.618994,		// Joint 2
+                +2.085741,		// Joint 3
+                -0.731049,		// Joint 4
+                -0.626299,		// Joint 5
+                +2.984250,		// Joint 6
+                +2.680757		// Joint 7
+        };
+
+        // Position at cart
+        positions["final cart position"] =
+        {
+                -2.529543,		// Joint 1
+                -1.650897,		// Joint 2
+                +1.970968,		// Joint 3
+                -0.732352,		// Joint 4
+                -0.476340,		// Joint 5
+                +2.980933,		// Joint 6
+                +2.692670		// Joint 7
+        };
+
+
+        // Position at cart - end effector turned around
+        positions["low cart position"] =
+        {
+                -2.618789,		// Joint 1
+                -1.554653,		// Joint 2
+                +2.508276,		// Joint 3
+                -0.766913,		// Joint 4
+                -2.313540,		// Joint 5
+                +2.646845,		// Joint 6
+                -2.385139		// Joint 7
         };
 
         return positions[position];

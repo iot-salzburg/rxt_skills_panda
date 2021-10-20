@@ -208,20 +208,22 @@ int main(int argc, char** argv)
 
                 } else if (global_order_movement.compare("SC") == 0) { // move from storage to cart
 
-                    pandaRobot->moveRobot(positions.getPosition("near storage place " + std::to_string(global_order_pos)));
-/*                  std::vector<MoveCommand> moveCommands;
+                    //pandaRobot->moveRobot(positions.getPosition("near storage place " + std::to_string(global_order_pos)));
+                    std::vector<MoveCommand> moveCommands;
                     std::string pos = std::to_string(global_order_pos);
-                    moveCommands.push_back({"cups init",      "-", "-"});
-                    moveCommands.push_back({"cups storage",          "-", "-"});
+                    moveCommands.push_back({"pack pose",          "open", "-"});
+                    moveCommands.push_back({"cups init",      "-", "-"});                    
                     moveCommands.push_back({"near cup " + pos,       "-", "-"});
-                    moveCommands.push_back({"cup "      + pos,       "open", "close"});
+                    moveCommands.push_back({"cup "      + pos,       "-", "close"});
                     moveCommands.push_back({"near cup " + pos,       "-", "-"});
-                    //moveCommands.push_back({"cups storage",          "-", "-"});
+                    moveCommands.push_back({"cups init",          "-", "-"});
+                    moveCommands.push_back({"cart init",          "-", "-"});
                     moveCommands.push_back({"near cart position",    "-", "-"});
-                    moveCommands.push_back({"cart position",         "-", "open"});
-                    moveCommands.push_back({"near cart position",    "-", "-"});
-                    moveCommands.push_back({"cups storage",          "close", "open"});                   
+                    moveCommands.push_back({"cart position",         "-", "-"});
+                    moveCommands.push_back({"final cart position",         "-", "open"});
 
+
+                    // now try execute the command pipeline
                     auto prevMove = moveCommands.begin();
                     for (auto moveCommand = moveCommands.begin(); moveCommand != moveCommands.end(); ++moveCommand) {
                         ROS_INFO("Move Command [%s],[%s],[%s]", 
@@ -230,15 +232,20 @@ int main(int argc, char** argv)
                             moveCommand->gripperAfter.c_str());
                         // in case we ran into an error before, recover it
                         errorRecoverPub.publish(empty);
+
                         try {
+                            if (moveCommand->position == "final cart position") {
+                                pandaRobot->setSpeed(0.1);
+                            } else {
+                                pandaRobot->setSpeed(0.2);
+                            }
                             pandaRobot->moveRobot(positions.getPosition(moveCommand->position), moveCommand->gripperBefore, moveCommand->gripperAfter);
                             prevMove = moveCommand;
-                        } catch (const PandaRobot::MovementException& me) {
+                        } catch (const PandaPositions::MovementException& me) {
                             ROS_ERROR("Exception in move from '%s' to '%s'", prevMove->position.c_str(), moveCommand->position.c_str());
                             throw std::exception();
                         }
                     }
-*/
 
                 } else if (global_order_movement.compare("DD") == 0) {
 

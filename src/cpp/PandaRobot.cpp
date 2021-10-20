@@ -1,5 +1,6 @@
 
 #include "PandaRobot.h"
+#include "PandaPositions.h"
 
 #include <ros/ros.h>
 #include <exception>
@@ -8,17 +9,7 @@
 //--------------------------------------------------------------------------
 // local helpers
 //--------------------------------------------------------------------------
-struct MovementException : public std::exception {
-    const char * what () const throw () {
-        return "Movement cannot be executed";
-    }
-};
 
-struct GoalToleranceExceededException : public std::exception {
-    const char * what () const throw () {
-        return "Goal tolerance exceeded";
-    }
-};
 
 PandaRobot* PandaRobot::instance = nullptr;
 
@@ -158,7 +149,7 @@ void PandaRobot::moveGroupCoreFunction(std::vector<double> joints_goal,
                                        Eigen::Affine3d text_pose){
     move_group->setJointValueTarget(joints_goal);
 
-/*  try {
+    try {
             moveit::planning_interface::MoveItErrorCode planningResult = 2;
             float tolerance = 0.0001;
             while (planningResult != moveit::planning_interface::MoveItErrorCode::SUCCESS) {
@@ -170,14 +161,14 @@ void PandaRobot::moveGroupCoreFunction(std::vector<double> joints_goal,
                 if (planningResult == moveit::planning_interface::MoveItErrorCode::PLANNING_FAILED) {
                     ROS_WARN("Planning failed, increasing goal tolerance to %f", tolerance += 0.001);
                     if (tolerance > 0.01) {
-                        throw GoalToleranceExceededException();
+                       throw PandaPositions::GoalToleranceExceededException();
                     }
                 }
             }
-    } catch (const GoalToleranceExceededException& e) {
+    } catch (const PandaPositions::GoalToleranceExceededException& e) {
             ROS_ERROR("Planning failed with exception: %s", e.what());
-            throw MovementException();
-    }*/
+            throw PandaPositions::MovementException();
+    }
         
     move_group->plan(my_plan);
 

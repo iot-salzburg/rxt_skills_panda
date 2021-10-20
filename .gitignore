@@ -5,3 +5,6 @@
 *.log
 /logging
 !/logging/logging.conf
+
+# Ignore all vscode dirs
+*.vscode/

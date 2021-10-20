@@ -8,13 +8,18 @@
 // Prints the joint values of the current franka panda robot position
 
 int main(int argc, char** argv) {
+
+    if(argc != 2)
+    {
+        std::cout << "Usage: Print program needs to be provided with a IP address argument. Number of passed program args insufficient." << std::endl;
+        return -1;
+    }
+
     bool print = false;
     franka::Robot robot(argv[1]);
   try {
         size_t count = 0;
         std::array<double, 7> currentPosition;
-
-
 
         robot.read([&print, &count, &currentPosition](const franka::RobotState& robot_state) {
 

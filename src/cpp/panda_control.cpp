@@ -174,7 +174,6 @@ int main(int argc, char** argv)
                 ////////////////// MOVEMENT OF ROBOT //////////////////
 
                 PandaPositions positions;
-                pandaRobot->moveGripper("home");
 
                 if (global_order_movement.compare("PB") == 0) { // from printer to belt
 
@@ -276,9 +275,16 @@ int main(int argc, char** argv)
 
                 } else if (global_order_movement.compare("ML") == 0) { // ROBxTASK Action: MoveToLocation
 
-                    std::string pos = std::to_string(global_order_pos);
-                    pandaRobot->moveRobot(positions.getPosition(pos));
+                    std::vector<MoveCommand> moveCommands;
 
+                    if(global_order_pos == 1) moveCommands.push_back({"pack pose", "-", "-"});
+                    else if(global_order_pos == 2) moveCommands.push_back({"cups init", "-", "-"});
+                    else if(global_order_pos == 3) moveCommands.push_back({"cart init", "-", "-"});
+                    else if(global_order_pos == 4) moveCommands.push_back({"final cart position", "-", "-"});
+
+                    
+                    // now try execute the command pipeline
+                    executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);
 
                 } else if (global_order_movement.compare("GO") == 0) { // ROBxTASK Action: GrabObject
 

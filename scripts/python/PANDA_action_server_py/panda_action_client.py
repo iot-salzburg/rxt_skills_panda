@@ -14,13 +14,13 @@ import rxt_skills_panda.msg
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # client request implementations of PANDA action server functions
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_request_MoveToLocation():
+def panda_request_MoveToLocation(defGoalLocation):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('MoveToLocation', rxt_skills_panda.msg.MoveToLocationAction) # Creates SimpleActionClient with MoveToLocationAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=b'cup') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=defGoalLocation) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -127,13 +127,36 @@ if __name__ == '__main__':
             print ('----------------------------------')
 
 	    # request MoveToLocation
-        result = panda_request_MoveToLocation()
+        result = panda_request_MoveToLocation(b'pack pose')
         if result:
             print ('----------------------------------')
             print("Action was: MoveToLocation")
             print("Result was: " + str(result.isOK))
             print ('----------------------------------')
         
+        # request MoveToLocation
+        result = panda_request_MoveToLocation(b'cups init')
+        if result:
+            print ('----------------------------------')
+            print("Action was: MoveToLocation")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')
+        
+        # request MoveToLocation
+        result = panda_request_MoveToLocation(b'cart init')
+        if result:
+            print ('----------------------------------')
+            print("Action was: MoveToLocation")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')
+        
+        # request MoveToLocation
+        result = panda_request_MoveToLocation(b'final cart position')
+        if result:
+            print ('----------------------------------')
+            print("Action was: MoveToLocation")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')
 
 
         # request WaitForUserInput

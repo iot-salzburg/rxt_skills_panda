@@ -35,15 +35,19 @@ class OPCUA_Response_Listener(object):
 def panda_move_to_location(location):
 
     try:   
-        #pub = rospy.Publisher('/ros_opcua_order', std_msgs.msg.String, queue_size=10) 
-        #message = "data: '" + location.decode("utf-8") + "'"
-        #rospy.loginfo(message)
-        #pub.publish(std_msgs.msg.String(message))
-        #message = str(rospy.wait_for_message('/ros_opcua_response', std_msgs.msg.String)) # listen on first message
-
 
         rospy.loginfo('Trying to publish to topic: opcua_order')
-        os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML " + location.decode("utf-8") + "'\"")
+        if(location.decode("utf-8") == 'pack pose'):
+            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 1'\"") # 1 ==  pack pose
+        elif(location.decode("utf-8") == 'cups init'):
+            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 2'\"") # 2 ==  cups init
+        elif(location.decode("utf-8") == 'cart init'):
+            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 3'\"") # 3 ==  cart init
+        elif(location.decode("utf-8") == 'final cart position'):
+            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 4'\"") # 4 ==  final cart position
+        else:
+            return False  
+        
 
         rospy.loginfo('Trying to listen from topic: opcua_response')
         list = OPCUA_Response_Listener()
@@ -138,7 +142,7 @@ def panda_read_setting(setting):
     #rospy.Subscriber('/exampleWithHeader', NodeExampleDataWithHeader, publish_message)
     #rospy.Subscriber('/exampleWithHeader_throttle', NodeExampleDataWithHeader, publish_message)
     
-    return message
+    return bytes(message, 'utf-8')
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

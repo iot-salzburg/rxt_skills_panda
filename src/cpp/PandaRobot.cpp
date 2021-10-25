@@ -120,23 +120,28 @@ bool PandaRobot::moveRobot(std::vector<double> joints_goal, std::string firstGri
             
     std::vector<double> joint_group_positions;
 
-    // Move Gripper before Robot Movement
-    ROS_DEBUG("moving gripper (%s)", firstGripperCommand);
-    sleep(0.5);
-    moveGripper(firstGripperCommand);
-    sleep(0.5);
+    // Move Gripper before Robot Movement (IF NEEDED)
+    if(firstGripperCommand != "-")
+    {
+        ROS_DEBUG("moving gripper (%s)", firstGripperCommand);
+        sleep(0.5);
+        moveGripper(firstGripperCommand);
+        sleep(0.5);
+    }
        
     current_state = move_group.getCurrentState();
     current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
-
     joint_group_positions = joints_goal;
-
     moveGroupCoreFunction(joints_goal, joint_model_group, &move_group, visual_tools, text_pose);
 
-    // Move Gripper before Robot Movement
-    sleep(0.5);
-    moveGripper(lastGripperCommand);
-    sleep(0.5);
+    // Move Gripper after Robot Movement (IF NEEDED)
+    if(lastGripperCommand != "-")
+    {
+        ROS_DEBUG("moving gripper (%s)", firstGripperCommand);
+        sleep(0.5);
+        moveGripper(lastGripperCommand);
+        sleep(0.5);
+    }
 }
 
 //--------------------------------------------------------------------------
@@ -171,7 +176,6 @@ void PandaRobot::moveGroupCoreFunction(std::vector<double> joints_goal,
     }
         
     move_group->plan(my_plan);
-
     move_group->setMaxVelocityScalingFactor(speed);
 
     visual_tools.deleteAllMarkers();

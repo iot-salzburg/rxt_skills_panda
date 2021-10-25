@@ -6,7 +6,7 @@ import rxt_skills_panda.msg
 
 # for publisher subscriber
 import std_msgs
-from panda_controller import *
+from franka_msgs.msg import FrankaState
     
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,28 @@ class OPCUA_Response_Listener(object):
             rospy.loginfo("Listener for topic ros_opcua_response will shutdown now")
             self.flag = False
             self.return_value = data.data
-	
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+# class containing callback for listening to franka states in order to get robot mode
+#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+class FrankaState_RobotMode_Listener(object):
+
+    def __init__(self):
+        self.prev = 0
+        self.flag = True
+        rospy.Subscriber('/franka_state_controller/franka_states', FrankaState, self.listener_callback)
+
+    def listener_callback(self, payload):
+        
+        # end loop if in inputMode we went from white to blue (user finished teaching something)
+        if (payload.robot_mode == 1 and self.prev == 5):
+            rospy.loginfo("Listener for topic ros_opcua_response will shutdown now")
+            self.flag = False
+            self.return_value = payload.robot_mode
+        
+        self.prev = payload.robot_mode
+        #rospy.loginfo(rospy.get_caller_id() + "On Topic /franka_states: I heard robot mode: " + str(payload.robot_mode) + 'while previous mode was: ' + str(self.prev))
+
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: move to location
@@ -105,16 +126,26 @@ def panda_put(objectPosition):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_listen_for_Input():
     
-    rospy.loginfo('TODO: Wait for User Touch')
-    ret=b'TODO'
+    rospy.loginfo('Trying to listen from topic: franka_states')
+    list = FrankaState_RobotMode_Listener()
+
+    while list.flag: # sleep to block ActionEnd until we received message
+        rospy.sleep(1)
+
+    ret=b'OK'
     return ret
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: wait external event
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_waitExternal(input):
+def panda_waitExternalEvent(input):
+
+    rospy.loginfo('Trying to listen from topic: franka_states')
+    list = FrankaState_RobotMode_Listener()
+
+    while list.flag: # sleep to block ActionEnd until we received message
+        rospy.sleep(1)
     
-    rospy.loginfo('TODO: Wait for Event')
     return True
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -297,7 +328,7 @@ class WaitForExternalEvent(object):
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_waitExternal(goal.inputText)
+        success = panda_waitExternalEvent(goal.inputText)
           
         if success:
             self._result.isOK = success

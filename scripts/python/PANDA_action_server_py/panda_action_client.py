@@ -157,23 +157,6 @@ if __name__ == '__main__':
             print("Action was: MoveToLocation")
             print("Result was: " + str(result.isOK))
             print ('----------------------------------')
-
-
-        # request WaitForUserInput
-        result = panda_request_WaitForUserInput()
-        if result:
-            print ('----------------------------------')
-            print("Action was: WaitForUserInput")
-            print("Result was:", ', '.join([str(n) for n in result.returnMessage.decode("utf-8")]))
-            print ('----------------------------------')
-                
-        # request WaitForExternalEvent
-        result = panda_request_WaitForExternalEvent()
-        if result:
-            print ('----------------------------------')
-            print("Action was: WaitForExternalEvent")
-            print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
         
         # request GetData
         result = panda_request_GetData()
@@ -190,6 +173,23 @@ if __name__ == '__main__':
             print("Action was: SetData")
             print("Result was: " + str(result.isOK))
             print ('----------------------------------')
+
+        # request WaitForUserInput
+        result = panda_request_WaitForUserInput()
+        if result:
+            print ('----------------------------------')
+            print("Action was: WaitForUserInput")
+            print("Result was:", ', '.join([str(n) for n in result.returnMessage.decode("utf-8")]))
+            print ('----------------------------------')
+                
+        # request WaitForExternalEvent
+        result = panda_request_WaitForExternalEvent()
+        if result:
+            print ('----------------------------------')
+            print("Action was: WaitForExternalEvent")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')
+
           
         # shutdown node
         #print ('----------------------------------')

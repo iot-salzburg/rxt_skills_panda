@@ -31,12 +31,12 @@
   {
     "SkillName": "WaitForUserInput",
     "SkillVersion": "V01",
-    "SkillDescription": "This skill is supported, but not yet implemented!"
+    "SkillDescription": "This skill will wait for user switching into teaching mode (white mode) using the bazar button. Once done teaching switch back to normal mode (blue mode) to finish the action."
   },
   {
     "SkillName": "WaitForExternalEvent",
     "SkillVersion": "V01",
-    "SkillDescription": "This skill is supported, but not yet implemented!"
+    "SkillDescription": "This skill will wait for user switching into teaching mode (white mode) using the bazar button. Once done teaching switch back to normal mode (blue mode) to finish the action."
   }
   ],
   "ConfigParams": [

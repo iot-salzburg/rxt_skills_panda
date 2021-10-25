@@ -72,7 +72,7 @@ def panda_request_WaitForExternalEvent():
 
     client = actionlib.SimpleActionClient('WaitForExternalEvent', rxt_skills_panda.msg.WaitForExternalEventAction) # Creates SimpleActionClient WaitForExternalEventAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.WaitForExternalEventGoal(inputText=b'fear') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.WaitForExternalEventGoal(inputText=b'void') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -85,7 +85,7 @@ def panda_request_GetData():
 
     client = actionlib.SimpleActionClient('GetData', rxt_skills_panda.msg.GetDataAction) # Creates SimpleActionClient with GetDataAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.GetDataGoal(inputData=b'robotName') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.GetDataGoal(inputData=b'void') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -98,7 +98,7 @@ def panda_request_SetData():
 
     client = actionlib.SimpleActionClient('SetData', rxt_skills_panda.msg.SetDataAction) # Creates SimpleActionClient with SetDataAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.SetDataGoal(outputData=b'Mario') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.SetDataGoal(outputData=b'data: \'SC 1\'') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     

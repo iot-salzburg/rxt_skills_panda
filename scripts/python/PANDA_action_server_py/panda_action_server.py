@@ -120,20 +120,7 @@ def panda_waitExternal(input):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: write a setting
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_write_setting(setting, value):
-    
-    rospy.loginfo('TODO: Write Setting')
-    return True
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: read a setting
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_read_setting(setting):
-
-
-    topics = rospy.get_published_topics()
-    message = str(json.dumps(topics, indent=4))
-    rospy.loginfo("Topics: %s", message)
+def panda_write_setting(value):
 
     # Create subscribers for appropriate topics, custom message and name of callback function. We do not yet get all topics and subscribe to them.
     #rospy.Subscriber('/franka_state_controller/franka_states', FrankaState, publishFrankaState)
@@ -142,7 +129,23 @@ def panda_read_setting(setting):
     #rospy.Subscriber('/exampleWithHeader', NodeExampleDataWithHeader, publish_message)
     #rospy.Subscriber('/exampleWithHeader_throttle', NodeExampleDataWithHeader, publish_message)
     
-    return bytes(message, 'utf-8')
+    rospy.loginfo('Trying to publish to topic: ros_opcua_order')
+    pub = rospy.Publisher('/ros_opcua_order', std_msgs.msg.String, queue_size=10)      
+    pub.publish(std_msgs.msg.String(value.decode("utf-8")))
+    return True
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+# helper function: read a setting
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+def panda_read_setting(value):
+
+    #topics = rospy.get_published_topics()
+    #message = str(json.dumps(topics, indent=4))
+    #rospy.loginfo("Topics: %s", message)
+
+    rospy.loginfo('Trying to read from topic: ros_opcua_response')
+    data = str(rospy.wait_for_message('/ros_opcua_response', std_msgs.msg.String))
+    return bytes(data, 'utf-8')
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -357,7 +360,7 @@ class SetData(object):
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_write_setting('robotName', goal.outputData)
+        success = panda_write_setting(goal.outputData)
           
         if success:
             self._result.isOK = success

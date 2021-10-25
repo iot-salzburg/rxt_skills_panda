@@ -5,40 +5,51 @@ import actionlib
 import rxt_skills_panda.msg
 
 # for publisher subscriber
-from std_msgs.msg import String
+import std_msgs
 from panda_controller import *
-
-
-global subscriber_handler
     
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+# class containing callback for listening to ros_opcua_response topic
+#------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+class OPCUA_Response_Listener(object):
+
+    def __init__(self):
+        self.flag = True
+        rospy.Subscriber('/ros_opcua_response', std_msgs.msg.String, self.listener_callback)
+
+    def listener_callback(self, data):
+
+        message = str(data.data)
+        rospy.loginfo(rospy.get_caller_id() + "On Topic opcua_response: I heard message: " + message)
+
+        if (message == 'Stopped'):
+            rospy.loginfo("Listener for topic ros_opcua_response will shutdown now")
+            self.flag = False
+            self.return_value = data.data
+	
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: move to location
 #------------------------------------------------------------------------------------------------------------------------------------------------------------ 
-def listener_callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "On Topic opcua_response: I heard message %s", data.data)
+def panda_move_to_location(location):
 
-#   if (data.data == String("Stopped")):
-#       subscriber_handler.unregister() # unregister and stop listening when panda stopped moving??
-#       subscriber_handler = None
-        # TODO: action is finished when this code is reached
-	
+    try:   
+        #pub = rospy.Publisher('/ros_opcua_order', std_msgs.msg.String, queue_size=10) 
+        #message = "data: '" + location.decode("utf-8") + "'"
+        #rospy.loginfo(message)
+        #pub.publish(std_msgs.msg.String(message))
+        #message = str(rospy.wait_for_message('/ros_opcua_response', std_msgs.msg.String)) # listen on first message
 
-def panda_move_to_location(position):
 
-    try:
-        print ('Trying to publish to topic: opcua_order')
-        pub = rospy.Publisher('/ros_opcua_order', String, queue_size=10) 
-        message = "data: '" + position.decode("utf-8") + "'"
-        rospy.loginfo(message)
-        pub.publish(String(message))
+        rospy.loginfo('Trying to publish to topic: opcua_order')
+        os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML " + location.decode("utf-8") + "'\"")
 
-        print ('Trying to listen from topic: opcua_response')
-        subscriber_handler = rospy.Subscriber('/ros_opcua_response', String, listener_callback)
+        rospy.loginfo('Trying to listen from topic: opcua_response')
+        list = OPCUA_Response_Listener()
 
-        # this endless loop will keep the action going until we heard back from robot
-#       while subscriber_handler is not None:
-#           continue
+        while list.flag: # sleep to block ActionEnd until we received "Stopped"-message
+            rospy.sleep(1)
 
     except rospy.ROSInterruptException:
         pass
@@ -48,17 +59,41 @@ def panda_move_to_location(position):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: grab (close gripper)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_grab(object):
+def panda_grab(objectPosition):
     
-    print ('TODO: Close Gripper')
+    try:   
+        rospy.loginfo('Trying to publish to topic: opcua_order')
+        os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'GO " + objectPosition.decode("utf-8") + "'\"")
+
+        rospy.loginfo('Trying to listen from topic: opcua_response')
+        list = OPCUA_Response_Listener()
+
+        while list.flag: # sleep to block ActionEnd until we received "Stopped"-message
+            rospy.sleep(1)
+
+    except rospy.ROSInterruptException:
+        pass
+
     return True
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # helper function: put (open gripper)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_put(object):
+def panda_put(objectPosition):
     
-    print ('TODO: Open Gripper')
+    try:   
+        rospy.loginfo('Trying to publish to topic: opcua_order')
+        os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'PO " + objectPosition.decode("utf-8") + "'\"")
+
+        rospy.loginfo('Trying to listen from topic: opcua_response')
+        list = OPCUA_Response_Listener()
+
+        while list.flag: # sleep to block ActionEnd until we received "Stopped"-message
+            rospy.sleep(1)
+
+    except rospy.ROSInterruptException:
+        pass
+
     return True
    
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -66,7 +101,7 @@ def panda_put(object):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_listen_for_Input():
     
-    print ('TODO: Wait for User Touch')
+    rospy.loginfo('TODO: Wait for User Touch')
     ret=b'TODO'
     return ret
     
@@ -75,7 +110,7 @@ def panda_listen_for_Input():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_waitExternal(input):
     
-    print ('TODO: Wait for Event')
+    rospy.loginfo('TODO: Wait for Event')
     return True
     
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -83,7 +118,7 @@ def panda_waitExternal(input):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 def panda_write_setting(setting, value):
     
-    print ('TODO: Write Setting')
+    rospy.loginfo('TODO: Write Setting')
     return True
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -93,7 +128,8 @@ def panda_read_setting(setting):
 
 
     topics = rospy.get_published_topics()
-    rospy.loginfo("Topics: %s", json.dumps(topics, indent=4))
+    message = str(json.dumps(topics, indent=4))
+    rospy.loginfo("Topics: %s", message)
 
     # Create subscribers for appropriate topics, custom message and name of callback function. We do not yet get all topics and subscribe to them.
     #rospy.Subscriber('/franka_state_controller/franka_states', FrankaState, publishFrankaState)
@@ -102,9 +138,7 @@ def panda_read_setting(setting):
     #rospy.Subscriber('/exampleWithHeader', NodeExampleDataWithHeader, publish_message)
     #rospy.Subscriber('/exampleWithHeader_throttle', NodeExampleDataWithHeader, publish_message)
     
-    print ('TODO: Read Setting')
-    ret=b'TODO'
-    return ret
+    return message
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

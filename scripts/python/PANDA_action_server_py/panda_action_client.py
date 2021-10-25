@@ -20,7 +20,7 @@ def panda_request_MoveToLocation():
 
     client = actionlib.SimpleActionClient('MoveToLocation', rxt_skills_panda.msg.MoveToLocationAction) # Creates SimpleActionClient with MoveToLocationAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=b'PS 2') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=b'cup') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -33,7 +33,7 @@ def panda_request_GrabObject():
 
     client = actionlib.SimpleActionClient('GrabObject', rxt_skills_panda.msg.GrabObjectAction) # Creates SimpleActionClient with GrabObject action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.GrabObjectGoal(objectPosition=b'Lagerfach_4') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.GrabObjectGoal(objectPosition=b'1') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -46,7 +46,7 @@ def panda_request_PutObject():
 
     client = actionlib.SimpleActionClient('PutObject', rxt_skills_panda.msg.PutObjectAction) # Creates SimpleActionClient with PutObject action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.PutObjectGoal(objectPosition=b'ARTI_ParkingStation') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.PutObjectGoal(objectPosition=b'1') # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -110,27 +110,11 @@ def panda_request_SetData():
 if __name__ == '__main__':
     try:
 
-	# request MoveToLocation
-        result = panda_request_MoveToLocation()
-        if result:
-            print ('----------------------------------')
-            print("Action was: MoveToLocation")
-            print("Result was: " + str(result.isOK))
-            print ('----------------------------------')	
-        
-	# request GrabObject
+        # request GrabObject
         result = panda_request_GrabObject()
         if result:
             print ('----------------------------------')
             print("Action was: GrabObject")
-            print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
-
-	# request MoveToLocation
-        result = panda_request_MoveToLocation()
-        if result:
-            print ('----------------------------------')
-            print("Action was: MoveToLocation")
             print("Result was: " + str(result.isOK))
             print ('----------------------------------')
 
@@ -141,7 +125,17 @@ if __name__ == '__main__':
             print("Action was: PutObject")
             print("Result was: " + str(result.isOK))
             print ('----------------------------------')
+
+	    # request MoveToLocation
+        result = panda_request_MoveToLocation()
+        if result:
+            print ('----------------------------------')
+            print("Action was: MoveToLocation")
+            print("Result was: " + str(result.isOK))
+            print ('----------------------------------')
         
+
+
         # request WaitForUserInput
         result = panda_request_WaitForUserInput()
         if result:

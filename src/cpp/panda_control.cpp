@@ -81,6 +81,35 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg){
 
 } 
 
+/////////////////////////////////////  HELPER FCT MOVE COMMAND PIPELEINe EXEC  /////////////////////////////////////////
+void executeCommandPipeline(std::vector<MoveCommand> moveCommands, 
+                            ros::Publisher & errorRecoverPub, 
+                            franka_control::ErrorRecoveryActionGoal & empty, 
+                            PandaPositions & positions, 
+                            PandaRobot & pandaRobot) 
+{
+    auto prevMove = moveCommands.begin();
+    for (auto moveCommand = moveCommands.begin(); moveCommand != moveCommands.end(); ++moveCommand) {
+
+        ROS_INFO("Move Command [%s],[%s],[%s]", moveCommand->position.c_str(), moveCommand->gripperBefore.c_str(), moveCommand->gripperAfter.c_str());
+
+        errorRecoverPub.publish(empty); // in case we ran into an error before, recover it
+
+        try {
+            if (moveCommand->position == "final cart position") {
+                pandaRobot.setSpeed(0.1);
+            } else {
+                pandaRobot.setSpeed(0.2);
+            }
+            pandaRobot.moveRobot(positions.getPosition(moveCommand->position), moveCommand->gripperBefore, moveCommand->gripperAfter);
+            prevMove = moveCommand;
+        } catch (const PandaPositions::MovementException& me) {
+            ROS_ERROR("Exception in move from '%s' to '%s'", prevMove->position.c_str(), moveCommand->position.c_str());
+            throw std::exception();
+        }
+    }
+}
+
 //////////////////////////////////////////////  M A I N  ///////////////////////////////////////////////////////////////
 int main(int argc, char** argv)
 {
@@ -147,7 +176,7 @@ int main(int argc, char** argv)
                 PandaPositions positions;
                 pandaRobot->moveGripper("home");
 
-                if (global_order_movement.compare("PO") == 0) {
+                if (global_order_movement.compare("PB") == 0) { // from printer to belt
 
                     // Move To Near Printer
                     pandaRobot->moveRobot(positions.getPosition("near printer"));
@@ -164,7 +193,7 @@ int main(int argc, char** argv)
                     // Move To Initial Position
                     pandaRobot->moveRobot(positions.getPosition("initial position"));
 
-                } else if (global_order_movement.compare("PS") == 0) {
+                } else if (global_order_movement.compare("PS") == 0) { // from printer to storage
 
                     // Move To Near Printer
                     pandaRobot->moveRobot(positions.getPosition("near printer"));
@@ -184,7 +213,7 @@ int main(int argc, char** argv)
                     // Move To Initial Position
                     pandaRobot->moveRobot(positions.getPosition("initial position"));
 
-                } else if (global_order_movement.compare("SO") == 0) {
+                } else if (global_order_movement.compare("SB") == 0) { // from storage to belt
                     // Move To Near Storage
                     pandaRobot->moveRobot(positions.getPosition("storage"));
 
@@ -206,48 +235,7 @@ int main(int argc, char** argv)
                     // Move To Initial Position
                     pandaRobot->moveRobot(positions.getPosition("initial position"));
 
-                } else if (global_order_movement.compare("SC") == 0) { // move from storage to cart
-
-                    //pandaRobot->moveRobot(positions.getPosition("near storage place " + std::to_string(global_order_pos)));
-                    std::vector<MoveCommand> moveCommands;
-                    std::string pos = std::to_string(global_order_pos);
-                    moveCommands.push_back({"pack pose",          "open", "-"});
-                    moveCommands.push_back({"cups init",      "-", "-"});                    
-                    moveCommands.push_back({"near cup " + pos,       "-", "-"});
-                    moveCommands.push_back({"cup "      + pos,       "-", "close"});
-                    moveCommands.push_back({"near cup " + pos,       "-", "-"});
-                    moveCommands.push_back({"cups init",          "-", "-"});
-                    moveCommands.push_back({"cart init",          "-", "-"});
-                    moveCommands.push_back({"near cart position",    "-", "-"});
-                    moveCommands.push_back({"cart position",         "-", "-"});
-                    moveCommands.push_back({"final cart position",         "-", "open"});
-
-
-                    // now try execute the command pipeline
-                    auto prevMove = moveCommands.begin();
-                    for (auto moveCommand = moveCommands.begin(); moveCommand != moveCommands.end(); ++moveCommand) {
-                        ROS_INFO("Move Command [%s],[%s],[%s]", 
-                            moveCommand->position.c_str(),
-                            moveCommand->gripperBefore.c_str(),
-                            moveCommand->gripperAfter.c_str());
-                        // in case we ran into an error before, recover it
-                        errorRecoverPub.publish(empty);
-
-                        try {
-                            if (moveCommand->position == "final cart position") {
-                                pandaRobot->setSpeed(0.1);
-                            } else {
-                                pandaRobot->setSpeed(0.2);
-                            }
-                            pandaRobot->moveRobot(positions.getPosition(moveCommand->position), moveCommand->gripperBefore, moveCommand->gripperAfter);
-                            prevMove = moveCommand;
-                        } catch (const PandaPositions::MovementException& me) {
-                            ROS_ERROR("Exception in move from '%s' to '%s'", prevMove->position.c_str(), moveCommand->position.c_str());
-                            throw std::exception();
-                        }
-                    }
-
-                } else if (global_order_movement.compare("DD") == 0) {
+                } else if (global_order_movement.compare("DD") == 0) { // from desk left to desk right
 
                     // Move To Box Position on the left side of the desk
                     pandaRobot->moveRobot(positions.getPosition("near desk left"));
@@ -266,6 +254,57 @@ int main(int argc, char** argv)
 
                     // Move To Box Position on the right side of the desk
                     //pandaRobot->moveRobot(positions.getPosition("near desk right"), "close", "-");
+
+                } else if (global_order_movement.compare("SC") == 0) { // move from storage to cart
+
+                    //pandaRobot->moveRobot(positions.getPosition("near storage place " + std::to_string(global_order_pos)));
+                    std::vector<MoveCommand> moveCommands;
+                    std::string pos = std::to_string(global_order_pos);
+                    moveCommands.push_back({"pack pose",          "open", "-"});
+                    moveCommands.push_back({"cups init",      "-", "-"});                    
+                    moveCommands.push_back({"near cup " + pos,       "-", "-"});
+                    moveCommands.push_back({"cup "      + pos,       "-", "close"});
+                    moveCommands.push_back({"near cup " + pos,       "-", "-"});
+                    moveCommands.push_back({"cups init",          "-", "-"});
+                    moveCommands.push_back({"cart init",          "-", "-"});
+                    moveCommands.push_back({"near cart position",    "-", "-"});
+                    moveCommands.push_back({"cart position",         "-", "-"});
+                    moveCommands.push_back({"final cart position",         "-", "open"});
+
+                    // now try execute the command pipeline
+                    executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);
+
+                } else if (global_order_movement.compare("ML") == 0) { // ROBxTASK Action: MoveToLocation
+
+                    std::string pos = std::to_string(global_order_pos);
+                    pandaRobot->moveRobot(positions.getPosition(pos));
+
+
+                } else if (global_order_movement.compare("GO") == 0) { // ROBxTASK Action: GrabObject
+
+                    std::vector<MoveCommand> moveCommands;
+                    std::string pos = std::to_string(global_order_pos);
+                    moveCommands.push_back({"pack pose",          "open", "-"});
+                    moveCommands.push_back({"cups init",      "-", "-"});                    
+                    moveCommands.push_back({"near cup " + pos,       "-", "-"});
+                    moveCommands.push_back({"cup "      + pos,       "-", "close"});
+                    moveCommands.push_back({"near cup " + pos,       "-", "-"});
+                    moveCommands.push_back({"cups init",          "-", "-"});
+
+                    // now try execute the command pipeline
+                    executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);
+
+                } else if (global_order_movement.compare("PO") == 0) { // ROBxTASK Action: PutObject
+
+                    std::vector<MoveCommand> moveCommands;
+                    std::string pos = std::to_string(global_order_pos);
+                    moveCommands.push_back({"cart init",          "-", "-"});
+                    moveCommands.push_back({"near cart position",    "-", "-"});
+                    moveCommands.push_back({"cart position",         "-", "-"});
+                    moveCommands.push_back({"final cart position",         "-", "open"});
+
+                    // now try execute the command pipeline
+                    executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);
 
                 }
             } catch (const std::exception& e) {

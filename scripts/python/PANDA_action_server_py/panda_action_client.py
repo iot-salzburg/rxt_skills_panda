@@ -14,91 +14,91 @@ import rxt_skills_panda.msg
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # client request implementations of PANDA action server functions
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_request_MoveToLocation(defGoalLocation):
+def panda_request_MoveToLocation(msgBytes):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('MoveToLocation', rxt_skills_panda.msg.MoveToLocationAction) # Creates SimpleActionClient with MoveToLocationAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=defGoalLocation) # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.MoveToLocationGoal(location=msgBytes) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (MoveToLocationResult) of executing the action
 
 
-def panda_request_GrabObject():
+def panda_request_GrabObject(msgBytes):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('GrabObject', rxt_skills_panda.msg.GrabObjectAction) # Creates SimpleActionClient with GrabObject action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.GrabObjectGoal(objectPosition=b'1') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.GrabObjectGoal(objectPosition=msgBytes) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (GrabObjectResult) of executing the action
 
 
-def panda_request_PutObject():
+def panda_request_PutObject(msgBytes):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('PutObject', rxt_skills_panda.msg.PutObjectAction) # Creates SimpleActionClient with PutObject action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.PutObjectGoal(objectPosition=b'1') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.PutObjectGoal(objectPosition=msgBytes) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (PutObjectResult) of executing the action
 
 
-def panda_request_WaitForUserInput():
+def panda_request_WaitForUserInput(msgBytes):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('WaitForUserInput', rxt_skills_panda.msg.WaitForUserInputAction) # Creates SimpleActionClient with WaitForUserInputAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.WaitForUserInputGoal(inputContent=b'void') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.WaitForUserInputGoal(inputContent=msgBytes) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (WaitForUserInputResult) of executing the action
     
     
-def panda_request_WaitForExternalEvent():
+def panda_request_WaitForExternalEvent(msgBytes):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('WaitForExternalEvent', rxt_skills_panda.msg.WaitForExternalEventAction) # Creates SimpleActionClient WaitForExternalEventAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.WaitForExternalEventGoal(inputText=b'void') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.WaitForExternalEventGoal(inputText=msgBytes) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (WaitForExternalEventResult) of executing the action
     
     
-def panda_request_GetData():
+def panda_request_GetData(msgBytes):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('GetData', rxt_skills_panda.msg.GetDataAction) # Creates SimpleActionClient with GetDataAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.GetDataGoal(inputData=b'void') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.GetDataGoal(inputData=msgBytes) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
     return client.get_result() # Prints out the result (GetDataResult) of executing the action
 
 
-def panda_request_SetData():
+def panda_request_SetData(msgBytes):
     
     rospy.init_node('panda_client_py') # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS
 
     client = actionlib.SimpleActionClient('SetData', rxt_skills_panda.msg.SetDataAction) # Creates SimpleActionClient with SetDataAction action type
     client.wait_for_server() # Waits until the action server has started up and started listening for goals
-    goal = rxt_skills_panda.msg.SetDataGoal(outputData=b'data: \'SC 1\'') # Creates a goal to send to the action server
+    goal = rxt_skills_panda.msg.SetDataGoal(outputData=msgBytes) # Creates a goal to send to the action server
     client.send_goal(goal) # Sends the goal to the action server
     client.wait_for_result() # Waits for the server to finish performing the action
     
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     try:
 
         # request GrabObject
-        result = panda_request_GrabObject()
+        result = panda_request_GrabObject(b'1')
         if result:
             print ('----------------------------------')
             print("Action was: GrabObject")
@@ -119,7 +119,7 @@ if __name__ == '__main__':
             print ('----------------------------------')
 
         # request PutObject
-        result = panda_request_PutObject()
+        result = panda_request_PutObject(b'1')
         if result:
             print ('----------------------------------')
             print("Action was: PutObject")
@@ -159,7 +159,7 @@ if __name__ == '__main__':
             print ('----------------------------------')
         
         # request GetData
-        result = panda_request_GetData()
+        result = panda_request_GetData(b'void')
         if result:
             print ('----------------------------------')
             print("Action was: GetData")
@@ -167,7 +167,7 @@ if __name__ == '__main__':
             print ('----------------------------------')
         
         # request SetData
-        result = panda_request_SetData()
+        result = panda_request_SetData(b'data: \'SC 1\'')
         if result:
             print ('----------------------------------')
             print("Action was: SetData")
@@ -175,7 +175,7 @@ if __name__ == '__main__':
             print ('----------------------------------')
 
         # request WaitForUserInput
-        result = panda_request_WaitForUserInput()
+        result = panda_request_WaitForUserInput(b'void')
         if result:
             print ('----------------------------------')
             print("Action was: WaitForUserInput")
@@ -183,7 +183,7 @@ if __name__ == '__main__':
             print ('----------------------------------')
                 
         # request WaitForExternalEvent
-        result = panda_request_WaitForExternalEvent()
+        result = panda_request_WaitForExternalEvent(b'void')
         if result:
             print ('----------------------------------')
             print("Action was: WaitForExternalEvent")

@@ -111,86 +111,86 @@ if __name__ == '__main__':
     try:
 
         # request GrabObject
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: GrabObject')
         result = panda_request_GrabObject(b'1')
         if result:
-            print ('----------------------------------')
-            print("Action was: GrabObject")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
 
         # request PutObject
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: PutObject')
         result = panda_request_PutObject(b'1')
         if result:
-            print ('----------------------------------')
-            print("Action was: PutObject")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
 
 	    # request MoveToLocation
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: MoveToLocation')
         result = panda_request_MoveToLocation(b'pack pose')
         if result:
-            print ('----------------------------------')
-            print("Action was: MoveToLocation")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
         
         # request MoveToLocation
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: MoveToLocation')
         result = panda_request_MoveToLocation(b'cups init')
         if result:
-            print ('----------------------------------')
-            print("Action was: MoveToLocation")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
         
         # request MoveToLocation
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: MoveToLocation')
         result = panda_request_MoveToLocation(b'cart init')
         if result:
-            print ('----------------------------------')
-            print("Action was: MoveToLocation")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
         
         # request MoveToLocation
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: MoveToLocation')
         result = panda_request_MoveToLocation(b'final cart position')
         if result:
-            print ('----------------------------------')
-            print("Action was: MoveToLocation")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
         
         # request GetData
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: GetData')
         result = panda_request_GetData(b'void')
         if result:
-            print ('----------------------------------')
-            print("Action was: GetData")
             print("Result was:", ', '.join([str(n) for n in result.data.decode("utf-8")]))
-            print ('----------------------------------')
+        print ('----------------------------------')
         
         # request SetData
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: SetData')
         result = panda_request_SetData(b'data: \'SC 1\'')
         if result:
-            print ('----------------------------------')
-            print("Action was: SetData")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
 
         # request WaitForUserInput
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: WaitForUserInput')
         result = panda_request_WaitForUserInput(b'void')
         if result:
-            print ('----------------------------------')
-            print("Action was: WaitForUserInput")
             print("Result was:", ', '.join([str(n) for n in result.returnMessage.decode("utf-8")]))
-            print ('----------------------------------')
+        print ('----------------------------------')
                 
         # request WaitForExternalEvent
+		print ('----------------------------------')
+		print ('INVOKING RXT_SKILL: WaitForExternalEvent')
         result = panda_request_WaitForExternalEvent(b'void')
         if result:
-            print ('----------------------------------')
-            print("Action was: WaitForExternalEvent")
             print("Result was: " + str(result.isOK))
-            print ('----------------------------------')
+        print ('----------------------------------')
 
-          
+
         # shutdown node
         #print ('----------------------------------')
         #print ('All requests done: Now trying to shutdown everything...')

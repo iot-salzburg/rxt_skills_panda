@@ -7,6 +7,9 @@ import rxt_skills_panda.msg
 # for publisher subscriber
 import std_msgs
 from franka_msgs.msg import FrankaState
+
+# self registration
+from self_registration import *
     
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -402,7 +405,12 @@ class SetData(object):
 # main function
 #------------------------------------------------------------------------------------------------------------------------------------------------------------	 
 if __name__ == '__main__':
+
+    # self registration
+    registration_file = loadRegistrationFile()
+    uploadAAS(registration_file)
     
+    # init server
     rospy.init_node('panda')
     server1 = MoveToLocation('MoveToLocation')
     server2 = GrabObject('GrabObject')

@@ -25,8 +25,7 @@ def loadRegistrationFile():
 def uploadAAS(aas):
     
     try:     
-        #r = requests.post('https://power2dm.salzburgresearch.at/robogen/DataBase/UploadJSON_MySettings', timeout=5, verify=False, json=aas)
-        r = requests.put(registration_endpoint, timeout=5, verify=False, json=aas)
+        r = requests.post(registration_endpoint, timeout=5, json=aas, auth=('devr', 'DevReg\!robXtask'))
         headers = {'Content-type': 'application/json'}      
             
         if r.ok:

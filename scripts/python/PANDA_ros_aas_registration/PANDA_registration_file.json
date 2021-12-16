@@ -6,37 +6,114 @@
   {
     "SkillName": "GetData",
     "SkillVersion": "V01",
-    "SkillDescription": "This skill can be used to read from the ROS topic /ros_opcua_response. It will return the current state of the arm robot."
+    "SkillDescription": "This skill can be used to read from the ROS topic /ros_opcua_response. It will return the current state of the arm robot.",
+    "SkillSlots": [
+      {
+      "SlotName": "inputData",
+      "SlotType": "string",
+      "SlotValues": []
+      }
+	],
+    "ReturnResult": {
+      "ReturnResultName": "data",
+      "ReturnResultType": "string"
+    }
   },
   {
     "SkillName": "SetData",
     "SkillVersion": "V01",
-    "SkillDescription": "This skill can be used to write to the ROS topic /ros_opcua_order. You may pass a parameter that will be published to the topic directly."
+    "SkillDescription": "This skill can be used to write to the ROS topic /ros_opcua_order. You may pass a parameter that will be published to the topic directly.",
+    "SkillSlots": [
+      {
+      "SlotName": "outputData",
+      "SlotType": "string",
+      "SlotValues": []
+      }
+	],
+    "ReturnResult": {
+      "ReturnResultName": "isOK",
+      "ReturnResultType": "bool"
+    }
   },
   {
     "SkillName": "MoveToLocation",
     "SkillVersion": "V01",
-    "SkillDescription": "Move the robot arm in a predifinded direction by passing one of the following directions as a parameter: (1) pack pose, (2) cups init, (3) cart init or (4) final cart position." 
+    "SkillDescription": "Move the robot arm in a predifinded direction by passing one of the following directions as a parameter: (1) pack pose, (2) cups init, (3) cart init or (4) final cart position.",
+    "SkillSlots": [
+      {
+      "SlotName": "location",
+      "SlotType": "enum",
+      "SlotValues": ["pack pose", "cups init", "cart init", "final cart position"]
+      }
+	],
+    "ReturnResult": {
+      "ReturnResultName": "isOK",
+      "ReturnResultType": "bool"
+    } 
   },
   {
     "SkillName": "GrabObject",
     "SkillVersion": "V01",
-    "SkillDescription": "Panda robot will automatically drive to the defined storage and grab the cup there. Define which storage to drive to by passing a number as a parameter between 1 and 9."
+    "SkillDescription": "Panda robot will automatically drive to the defined storage and grab the cup there. Define which storage to drive to by passing a number as a parameter between 1 and 9.",
+    "SkillSlots": [
+      {
+      "SlotName": "objectPosition",
+      "SlotType": "enum",
+      "SlotValues": ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+      }
+	],
+    "ReturnResult": {
+      "ReturnResultName": "isOK",
+      "ReturnResultType": "bool"
+    }
   },
   {
     "SkillName": "PutObject",
     "SkillVersion": "V01",
-    "SkillDescription": "Panda robot will automatically drive to the defined ARTI parking position and release the cup there."
+    "SkillDescription": "Panda robot will automatically drive to the defined ARTI parking position and release the cup there.",
+    "SkillSlots": [
+      {
+      "SlotName": "objectPosition",
+      "SlotType": "string",
+      "SlotValues": []
+      }
+	],
+    "ReturnResult": {
+      "ReturnResultName": "isOK",
+      "ReturnResultType": "bool"
+    }
   },
   {
     "SkillName": "WaitForUserInput",
     "SkillVersion": "V01",
-    "SkillDescription": "This skill will wait for user switching into teaching mode (white mode) using the bazar button. Once done teaching switch back to normal mode (blue mode) to finish the action."
+    "SkillDescription": "This skill will wait for user switching into teaching mode (white mode) using the buzzer button. Once done teaching switch back to normal mode (blue mode) to finish the action.",
+    "SkillSlots": [
+      {
+      "SlotName": "inputContent",
+      "SlotType": "string",
+      "SlotValues": []
+      }
+	],
+    "ReturnResult": {
+      "ReturnResultName": "returnMessage",
+      "ReturnResultType": "string"
+    }
   },
   {
     "SkillName": "WaitForExternalEvent",
     "SkillVersion": "V01",
-    "SkillDescription": "This skill will wait for user switching into teaching mode (white mode) using the bazar button. Once done teaching switch back to normal mode (blue mode) to finish the action."
+    "SkillDescription": "This skill will wait for user switching into teaching mode (white mode) using the buzzer button. Once done teaching switch back to normal mode (blue mode) to finish the action.",
+    "SkillSlots": [
+      {
+      "SlotName": "inputText",
+      "SlotType": "string",
+      "SlotValues": []
+      }
+	],
+    "ReturnResult": {
+      "ReturnResultName": "isOK",
+      "ReturnResultType": "bool"
+    }
   }
   ],
   "ConfigParams": [

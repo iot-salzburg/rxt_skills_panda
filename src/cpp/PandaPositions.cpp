@@ -414,6 +414,198 @@ std::vector<double> PandaPositions::getPosition(std::string position){
                 +0.802551               // Joint 7
         };
 
+	// near cup 2
+        positions["near cup 2"] =
+        {
+		-1.592111,		// Joint 1
+		-0.831132,		// Joint 2
+		-0.293202,		// Joint 3
+		-2.334463,		// Joint 4
+		+0.001557,		// Joint 5
+		+2.714610,		// Joint 6
+		+0.533747		// Joint 7
+	};
+
+        // cup 2
+        positions["cup 2"] =
+        {
+                -1.542355,		// Joint 1
+		-0.520639,		// Joint 2
+		-0.290363,		// Joint 3
+		-2.202321,		// Joint 4
+		+0.070173,		// Joint 5
+		+2.963892,		// Joint 6
+		+0.559834		// Joint 7
+        };
+
+	// near cup 3
+        positions["near cup 3"] =
+        {
+		-1.192797,		// Joint 1
+		-0.846124,		// Joint 2
+		-0.781272,		// Joint 3
+		-2.085752,		// Joint 4
+		+0.024559,		// Joint 5
+		+2.608819,		// Joint 6
+		+0.188706		// Joint 7
+        };
+
+        // cup 3
+        positions["cup 3"] =
+        {
+                -0.933278,		// Joint 1
+		-0.592505,		// Joint 2
+		-0.968288,		// Joint 3
+		-1.951560,		// Joint 4
+		+0.025300,		// Joint 5
+		+2.786079,		// Joint 6
+		+0.235363		// Joint 7
+        };
+
+	// near cup 4
+        positions["near cup 4"] =
+        {
+		-1.663199,		// Joint 1
+		-0.926131,		// Joint 2
+		-0.079755,		// Joint 3
+		-2.885500,		// Joint 4
+		-0.253432,		// Joint 5
+		+3.242397,		// Joint 6
+		+0.928099		// Joint 7
+        };
+
+        // cup 4
+        positions["cup 4"] =
+        {
+                -1.552766,              // Joint 1
+                -0.578903,              // Joint 2
+                -0.085411,              // Joint 3
+                -2.239540,              // Joint 4
+                -0.081153,              // Joint 5
+                +2.889223,              // Joint 6
+                +0.802551               // Joint 7
+        };
+
+	// near cup 5
+        positions["near cup 5"] =
+        {
+                -1.198776,		// Joint 1
+		-0.796367,		// Joint 2
+		-1.004230,		// Joint 3
+		-2.670429,		// Joint 4
+		-1.038242,		// Joint 5
+		+3.449645,		// Joint 6
+		+1.066800		// Joint 7
+        };
+
+        // cup 5
+        positions["cup 5"] =
+        {
+                -1.552766,              // Joint 1
+                -0.578903,              // Joint 2
+                -0.085411,              // Joint 3
+                -2.239540,              // Joint 4
+                -0.081153,              // Joint 5
+                +2.889223,              // Joint 6
+                +0.802551               // Joint 7
+        };
+
+	// near cup 6
+        positions["near cup 6"] =
+        {
+                -1.055176,		// Joint 1
+		-0.753361,		// Joint 2
+		-1.293411,		// Joint 3
+		-2.454399,		// Joint 4
+		-1.154347,		// Joint 5
+		+3.467647,		// Joint 6
+		+1.074559		// Joint 7
+        };
+
+        // cup 6
+        positions["cup 6"] =
+        {
+                -1.552766,              // Joint 1
+                -0.578903,              // Joint 2
+                -0.085411,              // Joint 3
+                -2.239540,              // Joint 4
+                -0.081153,              // Joint 5
+                +2.889223,              // Joint 6
+                +0.802551               // Joint 7
+        };
+
+	// near cup 7
+        positions["near cup 7"] =
+        {
+                -1.741325,		// Joint 1
+		-0.491909,		// Joint 2
+		-0.060317,		// Joint 3
+		-3.021907,		// Joint 4
+		-0.265992,		// Joint 5
+		+3.745550,		// Joint 6
+		+0.972498		// Joint 7
+        };
+
+        // cup 7
+        positions["cup 7"] =
+        {
+                -1.552766,              // Joint 1
+                -0.578903,              // Joint 2
+                -0.085411,              // Joint 3
+                -2.239540,              // Joint 4
+                -0.081153,              // Joint 5
+                +2.889223,              // Joint 6
+                +0.802551               // Joint 7
+        };
+
+	// near cup 8
+        positions["near cup 8"] =
+        {
+                -1.878539,		// Joint 1
+		-0.368694,		// Joint 2
+		-0.436457,		// Joint 3
+		-2.891217,		// Joint 4
+		-0.841270,		// Joint 5
+		+3.779620,		// Joint 6
+		+1.130640		// Joint 7
+        };
+
+        // cup 8
+        positions["cup 8"] =
+        {
+                -1.552766,              // Joint 1
+                -0.578903,              // Joint 2
+                -0.085411,              // Joint 3
+                -2.239540,              // Joint 4
+                -0.081153,              // Joint 5
+                +2.889223,              // Joint 6
+                +0.802551               // Joint 7
+        };
+
+	// near cup 9
+        positions["near cup 9"] =
+        {
+                -1.014583,		// Joint 1
+		-0.693323,		// Joint 2
+		-1.505031,		// Joint 3
+		-2.564583,		// Joint 4
+		-1.279273,		// Joint 5
+		+3.500460,		// Joint 6
+		+1.033384		// Joint 7
+        };
+
+        // cup 9
+        positions["cup 9"] =
+        {
+                -1.552766,              // Joint 1
+                -0.578903,              // Joint 2
+                -0.085411,              // Joint 3
+                -2.239540,              // Joint 4
+                -0.081153,              // Joint 5
+                +2.889223,              // Joint 6
+                +0.802551               // Joint 7
+        };
+
         // Position above cart
         positions["cart init"] =
         {

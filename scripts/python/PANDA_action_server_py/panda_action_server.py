@@ -67,8 +67,12 @@ def panda_move_to_location(location):
             os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 2'\"") # 2 ==  cups init
         elif(location.decode("utf-8") == 'cart init'):
             os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 3'\"") # 3 ==  cart init
-        elif(location.decode("utf-8") == 'final cart position'):
-            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 4'\"") # 4 ==  final cart position
+        elif(location.decode("utf-8") == 'final cart position 1'):
+            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 4'\"") # 4 ==  final cart position 1
+        elif(location.decode("utf-8") == 'final cart position 2'):
+            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 5'\"") # 5 ==  final cart position 2
+        elif(location.decode("utf-8") == 'final cart position 3'):
+            os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'ML 6'\"") # 6 ==  final cart position 3
         else:
             return False  
         

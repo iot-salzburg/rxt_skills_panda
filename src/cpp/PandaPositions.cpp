@@ -630,20 +630,8 @@ std::vector<double> PandaPositions::getPosition(std::string position){
                 +0.920835		// Joint 7
         };
 
-        // Position at cart
-        positions["cart position"] =
-        {
-                -2.289861,		// Joint 1
-                -1.618994,		// Joint 2
-                +2.085741,		// Joint 3
-                -0.731049,		// Joint 4
-                -0.626299,		// Joint 5
-                +2.984250,		// Joint 6
-                +2.680757		// Joint 7
-        };
-
-        // Position at cart
-        positions["final cart position"] =
+        // Position at cart slot 1
+        positions["final cart position 1"] =
         {
                 -2.529543,		// Joint 1
                 -1.650897,		// Joint 2
@@ -652,6 +640,30 @@ std::vector<double> PandaPositions::getPosition(std::string position){
                 -0.476340,		// Joint 5
                 +2.980933,		// Joint 6
                 +2.692670		// Joint 7
+        };
+
+        // Position at cart slot 2
+        positions["final cart position 2"] =
+        {
+                -2.565061,		// Joint 1
+                -1.621095,		// Joint 2
+                +1.980658,		// Joint 3
+                -0.890550,		// Joint 4
+                -0.475252,		// Joint 5
+                +2.983565,		// Joint 6
+                +2.672337		// Joint 7
+        };
+
+        // Position at cart slot 3
+        positions["final cart position 3"] =
+        {
+                -2.663470,		// Joint 1
+                -1.617490,		// Joint 2
+                +1.979150,		// Joint 3
+                -0.931156,		// Joint 4
+                -0.475181,		// Joint 5
+                +2.983441,		// Joint 6
+                +2.673147		// Joint 7
         };
 
 

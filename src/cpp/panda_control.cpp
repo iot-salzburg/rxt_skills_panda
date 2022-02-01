@@ -96,7 +96,7 @@ void executeCommandPipeline(std::vector<MoveCommand> moveCommands,
         errorRecoverPub.publish(empty); // in case we ran into an error before, recover it
 
         try {
-            if (moveCommand->position == "final cart position") {
+            if (moveCommand->position == "final cart position 1" || moveCommand->position == "final cart position 2" || moveCommand->position == "final cart position 3") {
                 pandaRobot.setSpeed(0.1);
             } else {
                 pandaRobot.setSpeed(0.2);
@@ -267,8 +267,7 @@ int main(int argc, char** argv)
                     moveCommands.push_back({"cups init",          "-", "-"});
                     moveCommands.push_back({"cart init",          "-", "-"});
                     moveCommands.push_back({"near cart position",    "-", "-"});
-                    moveCommands.push_back({"cart position",         "-", "-"});
-                    moveCommands.push_back({"final cart position",         "-", "open"});
+                    moveCommands.push_back({"final cart position 1",         "-", "open"});
 
                     // now try execute the command pipeline
                     executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);
@@ -280,8 +279,10 @@ int main(int argc, char** argv)
                     if(global_order_pos == 1) moveCommands.push_back({"pack pose", "-", "-"});
                     else if(global_order_pos == 2) moveCommands.push_back({"cups init", "-", "-"});
                     else if(global_order_pos == 3) moveCommands.push_back({"cart init", "-", "-"});
-                    else if(global_order_pos == 4) moveCommands.push_back({"final cart position", "-", "-"});
-
+                    else if(global_order_pos == 4) moveCommands.push_back({"final cart position 1", "-", "-"});
+                    else if(global_order_pos == 5) moveCommands.push_back({"final cart position 2", "-", "-"});
+                    else if(global_order_pos == 6) moveCommands.push_back({"final cart position 3", "-", "-"});
+                    else throw "ERROR: moveCommand unknown";
                     
                     // now try execute the command pipeline
                     executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);
@@ -306,8 +307,7 @@ int main(int argc, char** argv)
                     std::string pos = std::to_string(global_order_pos);
                     moveCommands.push_back({"cart init",          "-", "-"});
                     moveCommands.push_back({"near cart position",    "-", "-"});
-                    moveCommands.push_back({"cart position",         "-", "-"});
-                    moveCommands.push_back({"final cart position",         "-", "open"});
+                    moveCommands.push_back({"final cart position " + pos,         "-", "open"});
 
                     // now try execute the command pipeline
                     executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);

@@ -37,7 +37,7 @@ if __name__ == '__main__':
         # request PutObject
         print ('----------------------------------')
         print ('INVOKING RXT_SKILL: PutObject')
-        result = send_ROSActionRequest_WithGoal('PutObject', rxt_skills_panda.msg.PutObjectAction, rxt_skills_panda.msg.PutObjectGoal(objectPosition=b'3'))
+        result = send_ROSActionRequest_WithGoal('PutObject', rxt_skills_panda.msg.PutObjectAction, rxt_skills_panda.msg.PutObjectGoal(position=b'3'))
         if result:
             print("Result was: " + str(result.isOK))
         print ('----------------------------------')

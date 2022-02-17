@@ -1,4 +1,5 @@
 #goal definition
+char[] objectType
 char[] objectPosition
 ---
 #result definition

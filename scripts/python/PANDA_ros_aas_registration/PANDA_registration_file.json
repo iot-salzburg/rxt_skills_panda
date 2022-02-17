@@ -71,10 +71,10 @@
   {
     "SkillName": "PutObject",
     "SkillVersion": "V01",
-    "SkillDescription": "Panda robot will automatically drive to the defined ARTI parking position and release the cup there.",
+    "SkillDescription": "Panda robot will automatically drive to the defined ARTI parking position cup holder slot (1,2,3) and release the cup there.",
     "SkillSlots": [
       {
-      "SlotName": "objectPosition",
+      "SlotName": "position",
       "SlotType": "String",
       "SlotValues": []
       }

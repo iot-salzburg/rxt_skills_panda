@@ -268,11 +268,11 @@ class PutObject(object):
         self._feedback.sequence.append(0)
         self._feedback.sequence.append(1)
         
-        rospy.loginfo('%s: Executing, creating PutObject with object %s with seeds %i, %i' % (self._action_name, goal.objectPosition, self._feedback.sequence[0], self._feedback.sequence[1]))
+        rospy.loginfo('%s: Executing, creating PutObject with object %s with seeds %i, %i' % (self._action_name, goal.position, self._feedback.sequence[0], self._feedback.sequence[1]))
         
         # start executing the action
         #success = fibonacci_example(self, success)
-        success = panda_put(goal.objectPosition)
+        success = panda_put(goal.position)
           
         if success:
             self._result.isOK = success

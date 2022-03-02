@@ -185,6 +185,24 @@ def panda_read_setting(value):
     data = str(rospy.wait_for_message('/ros_opcua_response', std_msgs.msg.String))
     return bytes(data, 'utf-8')
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+# helper function: send message
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+def panda_send_message(value):
+    
+    # TODO - NOT YET IMPLEMENTED
+    time.sleep(2.0)
+    return True
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+# helper function: receive message
+#------------------------------------------------------------------------------------------------------------------------------------------------------------
+def panda_receive_message(value):
+    
+    # TODO - NOT YET IMPLEMENTED
+    time.sleep(2.0)
+    return True
+
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # MoveToLocation
@@ -406,7 +424,7 @@ class SetData(object):
             self._as.set_succeeded(self._result)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# SendMessage (NOT YET IMPLEMENTED)
+# SendMessage
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 class SendMessage(object):
     
@@ -428,9 +446,7 @@ class SendMessage(object):
         rospy.loginfo('%s: Executing, creating SendMessage sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.messageContent, self._feedback.sequence[0], self._feedback.sequence[1]))
         
         # start executing the action
-        # TODO
-        time.sleep(2.0)
-        success = True
+        success = panda_send_message(goal.messageContent)
           
         if success:
             self._result.isOK = success
@@ -438,7 +454,7 @@ class SendMessage(object):
             self._as.set_succeeded(self._result)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
-# OnMessageReceive (NOT YET IMPLEMENTED)
+# OnMessageReceive
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 class OnMessageReceive(object):
     
@@ -460,9 +476,7 @@ class OnMessageReceive(object):
         rospy.loginfo('%s: Executing, creating OnMessageReceive sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.messageContent, self._feedback.sequence[0], self._feedback.sequence[1]))
         
         # start executing the action
-        # TODO
-        time.sleep(2.0)
-        success = True
+        success = panda_receive_message(goal.messageContent)
           
         if success:
             self._result.isOK = success

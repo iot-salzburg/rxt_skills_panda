@@ -1,6 +1,6 @@
 {
   "DeviceID": "30:9c:23:84:fe:51",
-  "DeviceName": "Franka Emika Panda",
+  "DeviceName": "panda",
   "DeviceOwner": "81",
   "DeviceDescription": "Arm robot that can grab various different cups from fixed storage",
   "Skills": [

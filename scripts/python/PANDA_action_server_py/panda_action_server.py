@@ -1,5 +1,6 @@
-#!/usr/bin/env python
-import os, sys, time, json
+#! /usr/bin/env python3
+import os, time
+from sre_constants import SUCCESS
 import rospy
 import actionlib
 import rxt_skills_panda.msg
@@ -10,6 +11,11 @@ from franka_msgs.msg import FrankaState
 
 # self registration
 from self_registration import *
+
+# Global variable
+sent_message = None
+received_message = None
+
     
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -185,23 +191,6 @@ def panda_read_setting(value):
     data = str(rospy.wait_for_message('/ros_opcua_response', std_msgs.msg.String))
     return bytes(data, 'utf-8')
 
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: send message
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_send_message(value):
-    
-    # TODO - NOT YET IMPLEMENTED
-    time.sleep(2.0)
-    return True
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-# helper function: receive message
-#------------------------------------------------------------------------------------------------------------------------------------------------------------
-def panda_receive_message(value):
-    
-    # TODO - NOT YET IMPLEMENTED
-    time.sleep(2.0)
-    return True
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -437,21 +426,23 @@ class SendMessage(object):
         self._as.start()
       
     def execute_cb(self, goal):
-        
-        # append the seeds to give user feedback
+        global sent_message
+
+        # start executing the action
+        sent_message = str(goal.messageContent,'utf-8')
+        print("the sent message is ",sent_message)
+        rospy.sleep(0.2)
+
+         # append the seeds to give user feedback
         self._feedback.sequence = []
         self._feedback.sequence.append(0)
         self._feedback.sequence.append(1)
         
         rospy.loginfo('%s: Executing, creating SendMessage sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.messageContent, self._feedback.sequence[0], self._feedback.sequence[1]))
-        
-        # start executing the action
-        success = panda_send_message(goal.messageContent)
-          
-        if success:
-            self._result.isOK = success
-            rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._as.set_succeeded(self._result)
+
+        self._result.isOK = True
+        rospy.loginfo('%s: Succeeded' % self._action_name)
+        self._as.set_succeeded(self._result)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # OnMessageReceive
@@ -467,21 +458,31 @@ class OnMessageReceive(object):
         self._as.start()
       
     def execute_cb(self, goal):
-        
-        # append the seeds to give user feedback
+
+        # start executing the action
+        global received_message, sent_message
+        received_message = str(goal.messageContent,'utf-8')
+        if received_message == "panda":
+            while sent_message != "panda":
+                # rospy.sleep(0.1)
+                print("while loop")
+                if sent_message == "panda":
+                    break
+                if rospy.is_shutdown() == True:
+                    break
+        print("exited")
+        rospy.sleep(0.2)
+
+         # append the seeds to give user feedback
         self._feedback.sequence = []
         self._feedback.sequence.append(0)
         self._feedback.sequence.append(1)
         
         rospy.loginfo('%s: Executing, creating OnMessageReceive sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.messageContent, self._feedback.sequence[0], self._feedback.sequence[1]))
-        
-        # start executing the action
-        success = panda_receive_message(goal.messageContent)
           
-        if success:
-            self._result.isOK = success
-            rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._as.set_succeeded(self._result)
+        self._result.isOK = True
+        rospy.loginfo('%s: Succeeded' % self._action_name)
+        self._as.set_succeeded(self._result)
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

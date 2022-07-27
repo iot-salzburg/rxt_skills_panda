@@ -5,7 +5,7 @@ source ~/ros_workspace/devel/setup.bash
 
 # start the ROS action server in python using rospy
 gnome-terminal -- rosrun rxt_skills_panda panda_action_server.py
-sleep 5
+sleep 2
 
 # start roscore (serves as middle layer between all devices in ROBxTASK)
 # gnome-terminal -- roscore

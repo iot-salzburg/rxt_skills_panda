@@ -369,100 +369,108 @@ std::vector<double> PandaPositions::getPosition(std::string position){
         // TOP position above cup storage
         positions["pack pose"] =
         {
-                -0.000164,              // Joint 1
-                -0.559858,              // Joint 2
-                -0.000322,              // Joint 3
-                -2.600814,              // Joint 4
-                +0.000620,              // Joint 5
-                +1.854628,              // Joint 6
-                +0.785073               // Joint 7
+                0.00528177014748,              // Joint 1
+                -0.568099625246,              // Joint 2
+                -0.000235879764477,              // Joint 3
+                -2.60503246114,              // Joint 4
+                0.00135432496561,              // Joint 5
+                1.85467167118,              // Joint 6
+                -2.27529951134               // Joint 7
         };
 
         // initial approach
         positions["cups init"] =
         {
-                -1.566413,              // Joint 1
-                -1.393163,              // Joint 2
-                -0.069446,              // Joint 3
-                -2.640760,              // Joint 4
-                +0.014970,              // Joint 5
-                +2.712432,              // Joint 6
-                +0.781679               // Joint 7
+                -1.56649303118,              // Joint 1
+                -1.39314518845,              // Joint 2
+                -0.0694547084308,              // Joint 3
+                -2.64164333454,              // Joint 4
+                0.0152164550084,              // Joint 5
+                2.71197257406,              // Joint 6
+                -2.35954334604               // Joint 7
         };
 
         // near cup 1
         positions["near cup 1"] =
         {
-                -1.579210,              // Joint 1
-                -0.830873,              // Joint 2
-                -0.080680,              // Joint 3
-                -2.355923,              // Joint 4
-                +0.000934,              // Joint 5
-                +2.715878,              // Joint 6
-                +0.766539               // Joint 7
+                -1.61695819114,  // Joint 1
+                -0.9096829449,  // Joint 2
+                -0.0627964726686,  // Joint 3
+                -2.41131461826,  // Joint 4
+                -0.0354735631318,  // Joint 5
+                2.86623466868,  // Joint 6
+                -2.3466554071   // Joint 7
         };
+
 
         // cup 1
         positions["cup 1"] =
         {
-                -1.552766,              // Joint 1
-                -0.578903,              // Joint 2
-                -0.085411,              // Joint 3
-                -2.239540,              // Joint 4
-                -0.081153,              // Joint 5
-                +2.889223,              // Joint 6
-                +0.802551               // Joint 7
+                -1.61482238846,  // Joint 1
+                -0.55448271513,  // Joint 2
+                -0.0483680974116,  // Joint 3
+                -2.17507009086,  // Joint 4
+                -0.0768298714423,  // Joint 5
+                2.86268702259,  // Joint 6
+                -2.30041739797   // Joint 7
         };
+
+
+
 
 	// near cup 2
         positions["near cup 2"] =
         {
-		-1.592111,		// Joint 1
-		-0.831132,		// Joint 2
-		-0.293202,		// Joint 3
-		-2.334463,		// Joint 4
-		+0.001557,		// Joint 5
-		+2.714610,		// Joint 6
-		+0.533747		// Joint 7
-	};
+                -1.46418086023,  // Joint 1
+                -0.795024040465,  // Joint 2
+                -0.373031583109,  // Joint 3
+                -2.29660546567,  // Joint 4
+                -0.115898154896,  // Joint 5
+                2.80948995539,  // Joint 6
+                -2.56023840283   // Joint 7
+        };
+
 
         // cup 2
         positions["cup 2"] =
         {
-                -1.542355,		// Joint 1
-		-0.520639,		// Joint 2
-		-0.290363,		// Joint 3
-		-2.202321,		// Joint 4
-		+0.070173,		// Joint 5
-		+2.963892,		// Joint 6
-		+0.559834		// Joint 7
+                -1.36498976282,  // Joint 1
+                -0.54127801502,  // Joint 2
+                -0.455333696106,  // Joint 3
+                -2.1443812187,  // Joint 4
+                -0.0638545948037,  // Joint 5
+                2.89831546061,  // Joint 6
+                -2.51546618794   // Joint 7
         };
+
 
 	// near cup 3
         positions["near cup 3"] =
         {
-		-1.192797,		// Joint 1
-		-0.846124,		// Joint 2
-		-0.781272,		// Joint 3
-		-2.085752,		// Joint 4
-		+0.024559,		// Joint 5
-		+2.608819,		// Joint 6
-		+0.188706		// Joint 7
+                -0.934400199349,  // Joint 1
+                -0.937062170255,  // Joint 2
+                -0.881709682055,  // Joint 3
+                -2.01594025153,  // Joint 4
+                -0.478352400699,  // Joint 5
+                2.66060994524,  // Joint 6
+                -2.58715399133   // Joint 7
         };
+
 
         // cup 3
         positions["cup 3"] =
         {
-                -0.933278,		// Joint 1
-		-0.592505,		// Joint 2
-		-0.968288,		// Joint 3
-		-1.951560,		// Joint 4
-		+0.025300,		// Joint 5
-		+2.786079,		// Joint 6
-		+0.235363		// Joint 7
+                -0.693144469896,  // Joint 1
+                -0.790060963612,  // Joint 2
+                -1.04635548361,  // Joint 3
+                -1.85994091097,  // Joint 4
+                -0.466193009479,  // Joint 5
+                2.70231237825,  // Joint 6
+                -2.54130399413   // Joint 7
         };
 
-	// near cup 4
+
+	// near cup 4 {{{{{{{{{{{{{{ need to implement fro here }}}}}}}}}}}}}}
         positions["near cup 4"] =
         {
 		-1.590214,		// Joint 1
@@ -473,6 +481,9 @@ std::vector<double> PandaPositions::getPosition(std::string position){
 		+2.848828,		// Joint 6
 		+0.435233		// Joint 7
         };
+
+
+
 
         // cup 4
         positions["cup 4"] =
@@ -485,6 +496,9 @@ std::vector<double> PandaPositions::getPosition(std::string position){
 		+2.856439,		// Joint 6
 		+0.468385		// Joint 7
         };
+
+
+
 
 	// near cup 5
         positions["near cup 5"] =

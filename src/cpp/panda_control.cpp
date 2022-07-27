@@ -105,7 +105,7 @@ void executeCommandPipeline(std::vector<MoveCommand> moveCommands,
             prevMove = moveCommand;
         } catch (const PandaPositions::MovementException& me) {
             ROS_ERROR("Exception in move from '%s' to '%s'", prevMove->position.c_str(), moveCommand->position.c_str());
-            throw std::exception();
+            // throw std::exception();
         }
     }
 }
@@ -161,7 +161,7 @@ int main(int argc, char** argv)
 
             // publish error recovery (just in case)
             franka_control::ErrorRecoveryActionGoal empty{};
-            errorRecoverPub.publish(empty);
+            // errorRecoverPub.publish(0);
 
             // publish state
             global_response = "Moving";
@@ -282,7 +282,7 @@ int main(int argc, char** argv)
                     else if(global_order_pos == 4) moveCommands.push_back({"final cart position 1", "-", "-"});
                     else if(global_order_pos == 5) moveCommands.push_back({"final cart position 2", "-", "-"});
                     else if(global_order_pos == 6) moveCommands.push_back({"final cart position 3", "-", "-"});
-                    else throw "ERROR: moveCommand unknown";
+                    // else throw "ERROR: moveCommand unknown";
                     
                     // now try execute the command pipeline
                     executeCommandPipeline(moveCommands, errorRecoverPub, empty, positions, *pandaRobot);

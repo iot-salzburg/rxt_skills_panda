@@ -121,7 +121,7 @@ def panda_put(objectPosition):
     
     try:   
         rospy.loginfo('Trying to publish to topic: opcua_order')
-        os.system("rostopic pub -1 -v /ros_opcua_order std_msgs/String \"data: 'PO " + objectPosition.decode("utf-8") + "'\"")
+        os.system("rosrun rxt_panda_tracking track_drop_cup.py "+str(objectPosition.decode("utf-8")))
 
         rospy.loginfo('Trying to listen from topic: opcua_response')
         list = OPCUA_Response_Listener()
@@ -395,22 +395,34 @@ class SetData(object):
         self._as.start()
       
     def execute_cb(self, goal):
-        
-        # append the seeds to give user feedback
-        self._feedback.sequence = []
-        self._feedback.sequence.append(0)
-        self._feedback.sequence.append(1)
-        
-        rospy.loginfo('%s: Executing, creating SetData sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.outputData, self._feedback.sequence[0], self._feedback.sequence[1]))
-        
-        # start executing the action
-        #success = fibonacci_example(self, success)
-        success = panda_write_setting(goal.outputData)
-          
-        if success:
-            self._result.isOK = success
-            rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._as.set_succeeded(self._result)
+        print("deteeeeeeect", goal.outputData.decode('utf-8'))
+
+        if goal.outputData == "alexa":
+            var = None
+            while True:
+                var = input("Are you done using alexa ? (y/n): ")
+                if var == "y" or var == "Y":
+                    self._result.isOK = success
+                    rospy.loginfo('%s: Succeeded' % self._action_name)
+                    self._as.set_succeeded(self._result)
+                    break
+
+        else:        
+            # append the seeds to give user feedback
+            self._feedback.sequence = []
+            self._feedback.sequence.append(0)
+            self._feedback.sequence.append(1)
+            
+            rospy.loginfo('%s: Executing, creating SetData sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.outputData, self._feedback.sequence[0], self._feedback.sequence[1]))
+            
+            # start executing the action
+            #success = fibonacci_example(self, success)
+            success = panda_write_setting(goal.outputData)
+            
+            if success:
+                self._result.isOK = success
+                rospy.loginfo('%s: Succeeded' % self._action_name)
+                self._as.set_succeeded(self._result)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # SendMessage
@@ -462,28 +474,28 @@ class OnMessageReceive(object):
         # start executing the action
         global received_message, sent_message
         received_message = str(goal.messageContent,'utf-8')
-        if received_message == "panda":
-            while sent_message != "panda":
-                # rospy.sleep(0.1)
-                print("while loop")
-                if sent_message == "panda":
-                    break
-                if rospy.is_shutdown() == True:
-                    break
-        print("exited")
-        rospy.sleep(0.2)
+        print(sent_message, received_message,"kkkkkkkkkkkkkkkk")
+        while sent_message != received_message:
+            rospy.sleep(0.1)
+            if sent_message == received_message:
+                print("exited")
+                rospy.sleep(0.2)
 
-         # append the seeds to give user feedback
-        self._feedback.sequence = []
-        self._feedback.sequence.append(0)
-        self._feedback.sequence.append(1)
+                # append the seeds to give user feedback
+                self._feedback.sequence = []
+                self._feedback.sequence.append(0)
+                self._feedback.sequence.append(1)
+                
+                rospy.loginfo('%s: Executing, creating OnMessageReceive sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.messageContent, self._feedback.sequence[0], self._feedback.sequence[1]))
+                
+                self._result.isOK = True
+                rospy.loginfo('%s: Succeeded' % self._action_name)
+                self._as.set_succeeded(self._result)
+
+                break
+            if rospy.is_shutdown() == True:
+                break
         
-        rospy.loginfo('%s: Executing, creating OnMessageReceive sequence with outputData %s with seeds %i, %i' % (self._action_name, goal.messageContent, self._feedback.sequence[0], self._feedback.sequence[1]))
-          
-        self._result.isOK = True
-        rospy.loginfo('%s: Succeeded' % self._action_name)
-        self._as.set_succeeded(self._result)
-
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 # main function

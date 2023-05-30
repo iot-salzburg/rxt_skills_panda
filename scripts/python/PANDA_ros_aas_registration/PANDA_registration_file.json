@@ -39,12 +39,12 @@
   {
     "SkillName": "MoveToLocation",
     "SkillVersion": "V01",
-    "SkillDescription": "Move the robot arm in a predifinded direction by passing one of the following directions as a parameter: (1) pack pose, (2) cups init, (3) cart init or (4) final cart position.",
+    "SkillDescription": "Move the robot arm in a predifinded direction by passing one of the following directions as a parameter: (1) pack pose, (2) cups init, (3) cart init",
     "SkillSlots": [
       {
       "SlotName": "location",
       "SlotType": "Enum",
-      "SlotValues": ["pack pose", "cups init", "cart init", "final cart position"]
+      "SlotValues": ["pack pose", "cups init", "cart init"]
       }
 	],
     "ReturnResult": {

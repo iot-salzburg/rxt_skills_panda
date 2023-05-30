@@ -291,7 +291,7 @@ int main(int argc, char** argv)
 
                     std::vector<MoveCommand> moveCommands;
                     std::string pos = std::to_string(global_order_pos);
-                    moveCommands.push_back({"pack pose",          "open", "-"});
+                    moveCommands.push_back({"cart init",          "open", "-"});
                     moveCommands.push_back({"cups init",      "-", "-"});                    
                     moveCommands.push_back({"near cup " + pos,       "-", "-"});
                     moveCommands.push_back({"cup "      + pos,       "-", "close"});
@@ -320,6 +320,8 @@ int main(int argc, char** argv)
 
             //     era.sendGoal(goalError);
             }
+
+            global_order_movement = "NULL";
 
             // publish state
             global_response = "Stopped";
